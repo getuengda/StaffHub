@@ -25,9 +25,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserTraining> trainings;
 
-    @Column(name = "office_id")
-    private Integer office_Id;
-
     @Column(name = "firstname")
     private String firstName;
 
@@ -36,6 +33,9 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "office_id")
+    private Integer office_Id;
 
     @Column(name = "password")
     private String password;
@@ -47,19 +47,10 @@ public class User {
     @Column(name = "job_title")
     private String jobTitle;
 
-    @Column(name = "profile_image_url")
-    private String profileImage;
-
-    @Column(name = "vacation_hours")
-    private Integer vacationHours;
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @Column(name = "address")
     private String address;
-
-    @Column(name = "role")
-    private String role;
-
-    @Column(name = "image_url")
-    private String imageUrl;
 
 }
