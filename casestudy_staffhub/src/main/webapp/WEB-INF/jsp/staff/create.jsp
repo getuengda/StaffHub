@@ -3,7 +3,7 @@
 <jsp:include page="../include/header.jsp"/>
 
 <section>
-    <div class="bg-light2 pt-5 pb-5">
+    <div class="bg-beige pt-5 pb-5">
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="m-0">Create User</h1>
@@ -16,7 +16,7 @@
 
              <!-- the action attribute on the form tag is the URL that the form will submit to when then user clicks the submit button -->
             <form method="post" action="/staff/createSubmit" style="width: 50%;">
-    
+
                                 <c:if test="${not empty success}">
                                     <div class="row justify-content-center">
                                         <div class="col-6 text-center">
