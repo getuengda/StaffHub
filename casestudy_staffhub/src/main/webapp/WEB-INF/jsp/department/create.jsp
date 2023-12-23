@@ -14,7 +14,17 @@
 
 
     <div class="container d-flex justify-content-center align-items-center">
-        <form method="get" action="/department/createSubmit">
+
+        <form method="get" action="/department/createSubmit" style="width: 50%;">
+                            <c:if test="${not empty success}">
+                                            <div class="row justify-content-center">
+                                                <div class="col-6 text-center">
+                                                    <div class="alert alert-success" role="alert">
+                                                            ${success}
+                                                    </div>
+                                                </div>
+                                            </div>
+                            </c:if>
                <div class="mb-3 mt-5">
                        <label for="departmentName" class="form-label">Department Name</label>
                        <input type="text" class="form-control" id="departmentName" name="departmentName" value="${form.departmentName}">

@@ -14,7 +14,7 @@ public interface UserDAO extends JpaRepository<User, Long> {
 
     public User findByEmailIgnoreCase(String email);
 
-    @Query("SELECT u FROM User u WHERE u.firstName LIKE :firstName and u.lastName LIKE :lastName")
-    List<User> findByUserFirstNameAndLastName(String firstName, String lastName);
+    @Query("SELECT u FROM User u WHERE u.firstName LIKE :firstName or u.lastName LIKE :lastName")
+    List<User> findUserByFirstNameOrLastName(String firstName, String lastName);
 
 }

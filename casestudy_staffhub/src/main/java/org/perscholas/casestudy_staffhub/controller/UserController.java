@@ -126,4 +126,34 @@ public class UserController {
 
         return response;
     }
+
+    @GetMapping("staff/search")
+    public ModelAndView  search(@RequestParam(required = false) String firstName,
+                                @RequestParam(required = false) String lastName){
+        ModelAndView response = new ModelAndView("staff/search");
+        log.info("In the user search controller method firstName: " + firstName);
+        log.info("In the user search controller method lastName: " + lastName);
+
+        if(!StringUtils.isEmpty(firstName) || !StringUtils.isEmpty(lastName)){
+            response.addObject("firstName", firstName);
+            response.addObject("lastName",lastName);
+
+            if(!StringUtils.isEmpty(firstName)){
+                firstName = "%" + firstName + "%";
+            }
+            if(!StringUtils.isEmpty(lastName)){
+                lastName = "%" + lastName + "%";
+            }
+
+            List<User> users = userDao.findUserByFirstNameOrLastName(firstName, lastName);
+            response.addObject("userVar", users);
+
+            for(User user : users){
+                log.info("user: id= " + user.getId() + "first name = " + user.getFirstName());
+                log.info("user: id= " + user.getId() + "last name = " + user.getLastName());
+            }
+
+        }
+        return response;
+    }
 }
