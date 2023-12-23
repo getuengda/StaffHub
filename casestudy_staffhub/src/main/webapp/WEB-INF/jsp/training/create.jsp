@@ -13,7 +13,17 @@
 </section>
 
 <div class="d-flex justify-content-center align-items-center">
-        <form method="post" action="/training/createSubmit">
+
+        <form method="post" action="/training/createSubmit" style="width: 50%;">
+                            <c:if test="${not empty success}">
+                                    <div class="row justify-content-center">
+                                        <div class="col-6 text-center">
+                                            <div class="alert alert-success" role="alert">
+                                                    ${success}
+                                            </div>
+                                        </div>
+                                    </div>
+                            </c:if>
         <input type="hidden" name="id" value="${form.id}">
                <div class="mb-3 mt-5">
                        <label for="trainingName" class="form-label">Training Name</label>
