@@ -1,0 +1,39 @@
+
+.bg-light1 {
+    background-color: #f8f9fa;
+}
+.bg-light2 {
+    background-color: #e9ecef;
+}
+
+.bg-peach {
+    background-color: #FFDBC3;
+}
+
+.bg-sage {
+    background-color: #D4E2D4;
+}
+
+.bg-beige {
+    background-color: #FFF3DA;
+}
+
+.footer-bg-color {
+    background-color:#a4a7ab;
+}
+
+.footer-bg-color2 {
+    background-color:#DBC4F0;
+}
+
+ body {
+        background-image: url("/pub/images/staff_mgmt4.jpg");
+        background-size: cover;
+        z-index: -100;
+  }
+
+  .navbar {
+      height: 80px;
+      background-color: bg-light2;
+
+  }
