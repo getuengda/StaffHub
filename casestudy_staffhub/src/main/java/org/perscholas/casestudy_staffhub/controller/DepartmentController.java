@@ -90,11 +90,30 @@ public class DepartmentController {
             form.setDescription(department.getDescription());
             form.setImageUrl(department.getImageUrl());
         } else {
-            log.warn("Department with id " +  department.getId() + " was not found");
+            log.info("Department with id " +  department.getId() + " was not found");
         }
 
         response.addObject("form", form);
 
+        return response;
+    }
+
+    @GetMapping("/department/search")
+    public ModelAndView search(@RequestParam(required = false) String departmentName){
+        ModelAndView response = new ModelAndView("department/search");
+        log.debug("In the department search controller method departmentName: " + departmentName);
+
+        if(!StringUtils.isEmpty(departmentName)){
+            departmentName = "%" + departmentName + "%";
+        }
+
+        List<Department> departments = departmentDao.findDepartmentByName(departmentName);
+        response.addObject("departmentVar", departments);
+
+        for(Department department : departments){
+            log.info("department: id= " + department.getId() + "department Name = " + department.getDepartmentName());
+            log.info("department: id= " + department.getId() + "description = " + department.getDescription());
+        }
         return response;
     }
 }
