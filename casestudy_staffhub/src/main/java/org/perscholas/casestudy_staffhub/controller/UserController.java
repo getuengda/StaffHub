@@ -149,8 +149,8 @@ public class UserController {
             response.addObject("userVar", users);
 
             for(User user : users){
-                log.info("user: id= " + user.getId() + "first name = " + user.getFirstName());
-                log.info("user: id= " + user.getId() + "last name = " + user.getLastName());
+                log.info("user: id= " + user.getId() + " first name = " + user.getFirstName());
+                log.info("user: id= " + user.getId() + " last name = " + user.getLastName());
             }
 
         }

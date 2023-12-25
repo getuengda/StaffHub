@@ -15,6 +15,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 public class TrainingController {
@@ -78,11 +80,34 @@ public class TrainingController {
             form.setPrerequisite(training.getPrerequisite());
             form.setImageUrl(training.getImageUrl());
         } else {
-            log.warn("Training with id " + trainingId + " was not found");
+            log.info("Training with id " + trainingId + " was not found");
         }
 
         response.addObject("form", form);
 
+        return response;
+    }
+
+    @GetMapping("training/search")
+    public ModelAndView search(@RequestParam(required = false) String trainingName){
+        ModelAndView response = new ModelAndView("training/search");
+        log.info("In the training search controller method trainingName: " + trainingName);
+
+        if(!StringUtils.isEmpty(trainingName)){
+            response.addObject("trainingName", trainingName);
+
+            if(!StringUtils.isEmpty(trainingName)){
+                trainingName = "%" + trainingName + "%";
+            }
+
+            List<Training> trainings = trainingDao.findTrainingByName(trainingName);
+            response.addObject("trainingVar", trainings);
+
+            for(Training training : trainings){
+                log.info("training: id= " + training.getId() + "training Name = " + training.getTrainingName());
+                log.info("training: id= " + training.getId() + "description = " + training.getDescription());
+            }
+        }
         return response;
     }
 
