@@ -3,6 +3,7 @@ package org.perscholas.casestudy_staffhub.controller;
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.perscholas.casestudy_staffhub.database.dao.DepartmentDAO;
 import org.perscholas.casestudy_staffhub.database.entity.Department;
 import org.perscholas.casestudy_staffhub.formbean.DepartmentFormBean;
@@ -11,12 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 @Slf4j
@@ -130,6 +132,43 @@ public class DepartmentController {
         } else {
             log.warn("Department with id " + id + " not found");
         }
+
+        return response;
+    }
+
+    @GetMapping("/department/fileupload")
+    public ModelAndView fileUpload(@RequestParam Integer id) {
+        ModelAndView response = new ModelAndView("department/fileupload");
+
+        Department department = departmentDao.findById(id);
+        response.addObject("department", department);
+
+        log.info(" In fileupload with no Args");
+        return response;
+    }
+
+    @PostMapping("/department/fileUploadSubmit")
+    public ModelAndView fileUploadSubmit(@RequestParam("file") MultipartFile file,
+                                         @RequestParam Integer id) {
+        ModelAndView response = new ModelAndView("redirect:/department/detail?id=" + id);
+
+        log.info("Filename = " + file.getOriginalFilename());
+        log.info("Size     = " + file.getSize());
+        log.info("Type     = " + file.getContentType());
+
+
+        // Get the file and save it somewhere
+        File f = new File("./src/main/webapp/pub/images/" + file.getOriginalFilename());
+        try (OutputStream outputStream = new FileOutputStream(f.getAbsolutePath())) {
+            IOUtils.copy(file.getInputStream(), outputStream);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        Department department = departmentDao.findById(id);
+        department.setImageUrl("/pub/images/" + file.getOriginalFilename());
+        departmentDao.save(department);
 
         return response;
     }

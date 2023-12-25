@@ -31,7 +31,7 @@
               </div>
               <div class="mb-3">
                   <label for="yourTextarea" class="form-label">Description</label>
-                  <textarea class="form-control" id="description" name="description" value="${form.description}" rows="4" cols="50"></textarea>
+                  <input class="form-control" id="description" name="description" value="${form.description}" style="width: 555px; height: 100px;">
                </div>
                 <div class="mb-3">
                     <label for="imageUrl" class="form-label">Image URL</label>
