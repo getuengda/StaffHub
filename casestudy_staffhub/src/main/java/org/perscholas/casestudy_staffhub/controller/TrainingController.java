@@ -112,4 +112,21 @@ public class TrainingController {
         return response;
     }
 
+    @GetMapping("/training/detail")
+    public ModelAndView trainingDetail(@RequestParam(required = false) Integer id) {
+        ModelAndView response = new ModelAndView("training/detail");
+        log.debug("In the training detail controller method id: " + id);
+
+        // Fetch single training by id
+        Training training = trainingDao.findById(id);
+
+        if (training != null) {
+            response.addObject("training", training);
+        } else {
+            log.warn("Training with id " + id + " not found");
+        }
+
+        return response;
+    }
+
 }

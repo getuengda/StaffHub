@@ -49,6 +49,7 @@
                                 <td>Prerequisite</td>
                                 <td>Image</td>
                                 <td>Edit</td>
+                                <td>Detail</td>
                             </tr>
                             <c:forEach items="${trainingVar}" var="training">
                                 <tr>
@@ -60,6 +61,9 @@
                                     <td><img src="${training.imageUrl}" style="width:30px; height: 30px"></td>
                                     <td>
                                         <a href="/training/edit/${training.id}">Edit</a>
+                                    </td>
+                                    <td>
+                                        <a href="/training/detail?id=${training.id}">Detail</a>
                                     </td>
                                 </tr>
                             </c:forEach>

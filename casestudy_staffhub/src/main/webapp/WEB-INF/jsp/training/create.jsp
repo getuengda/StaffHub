@@ -29,14 +29,35 @@
                        <label for="trainingName" class="form-label">Training Name</label>
                        <input type="text" class="form-control" id="trainingName" name="trainingName" value="${form.trainingName}">
               </div>
+                   <c:if test="${errors.hasFieldErrors('trainingName')}">
+                      <div class="error" style="color:red">
+                          <c:forEach items="${errors.getFieldErrors('trainingName')}" var="error">
+                              ${error.defaultMessage}<br>
+                          </c:forEach>
+                      </div>
+                  </c:if>
               <div class="mb-3">
                   <label for="yourTextarea" class="form-label">Date Posted</label>
                   <input type="Date" class="form-control" id="datePosted" name="datePosted" value="${form.datePosted}">
                </div>
+                    <c:if test="${errors.hasFieldErrors('datePosted')}">
+                         <div class="error" style="color:red">
+                             <c:forEach items="${errors.getFieldErrors('datePosted')}" var="error">
+                                 ${error.defaultMessage}<br>
+                             </c:forEach>
+                         </div>
+                    </c:if>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description" name="description" value="${form.description}" rows="4" cols="50"></textarea>
                 </div>
+                        <c:if test="${errors.hasFieldErrors('description')}">
+                             <div class="error" style="color:red">
+                                 <c:forEach items="${errors.getFieldErrors('description')}" var="error">
+                                     ${error.defaultMessage}<br>
+                                 </c:forEach>
+                             </div>
+                        </c:if>
                 <div class="mb-3">
                     <label for="prerequisite" class="form-label">Prerequisite</label>
                     <textarea class="form-control" id="prerequisite" name="prerequisite" value="${form.prerequisite}" rows="2" cols="50"></textarea>
