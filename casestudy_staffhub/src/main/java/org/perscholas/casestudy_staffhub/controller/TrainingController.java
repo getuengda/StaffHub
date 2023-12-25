@@ -54,6 +54,7 @@ public class TrainingController {
         }
 
         Training t = trainingService.createTraining(form);
+
         ModelAndView response = new ModelAndView();
         response.setViewName("redirect:/training/edit/" + t.getId() + "?success=Training Saved Successfully");
 

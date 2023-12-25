@@ -156,4 +156,21 @@ public class UserController {
         }
         return response;
     }
+
+    @GetMapping("/staff/detail")
+    public ModelAndView userDetail(@RequestParam(required = false) Integer id) {
+        ModelAndView response = new ModelAndView("staff/detail");
+        log.debug("In the user detail controller method id: " + id);
+
+        // Fetch single user by id
+        User user = userDao.findById(id);
+
+        if (user != null) {
+            response.addObject("user", user);
+        } else {
+            log.warn("User with id " + id + " not found");
+        }
+
+        return response;
+    }
 }
