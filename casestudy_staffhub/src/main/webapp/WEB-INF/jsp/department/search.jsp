@@ -47,6 +47,7 @@
                                 <td>Description</td>
                                 <td>Image</td>
                                 <td>Edit</td>
+                                <td>Detail</td>
                             </tr>
                             <c:forEach items="${departmentVar}" var="department">
                                 <tr>
@@ -56,6 +57,9 @@
                                     <td><img src="${department.imageUrl}" style="width:30px; height: 30px"></td>
                                     <td>
                                         <a href="/department/edit/${department.id}">Edit</a>
+                                    </td>
+                                     <td>
+                                        <a href="/department/detail?id=${department.id}">Detail</a>
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -116,4 +116,21 @@ public class DepartmentController {
         }
         return response;
     }
+
+    @GetMapping("/department/detail")
+    public ModelAndView departmentDetail(@RequestParam(required = false) Integer id) {
+        ModelAndView response = new ModelAndView("department/detail");
+        log.debug("In the department detail controller method id: " + id);
+
+        // Fetch single department by id
+        Department department = departmentDao.findById(id);
+
+        if (department != null) {
+            response.addObject("department", department);
+        } else {
+            log.warn("Department with id " + id + " not found");
+        }
+
+        return response;
+    }
 }
