@@ -61,6 +61,7 @@
                                 <td>Address</td>
                                 <td>Image</td>
                                 <td>Edit</td>
+                                <td>Detail</td>
                             </tr>
                             <c:forEach items="${userVar}" var="user">
                                 <tr>
@@ -75,6 +76,9 @@
                                     <td><img src="${user.imageUrl}" style="max-width:100px"></td>
                                     <td>
                                         <a href="/staff/edit/${user.id}">Edit</a>
+                                    </td>
+                                    <td>
+                                        <a href="/staff/detail?id=${user.id}">Detail</a>
                                     </td>
                                 </tr>
                             </c:forEach>
