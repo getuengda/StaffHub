@@ -6,9 +6,13 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.perscholas.casestudy_staffhub.database.dao.DepartmentDAO;
+import org.perscholas.casestudy_staffhub.database.dao.TrainingDAO;
 import org.perscholas.casestudy_staffhub.database.dao.UserDAO;
+import org.perscholas.casestudy_staffhub.database.dao.UserTrainingDAO;
 import org.perscholas.casestudy_staffhub.database.entity.Department;
+import org.perscholas.casestudy_staffhub.database.entity.Training;
 import org.perscholas.casestudy_staffhub.database.entity.User;
+import org.perscholas.casestudy_staffhub.database.entity.UserTraining;
 import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
 import org.perscholas.casestudy_staffhub.service.DepartmentService;
 import org.perscholas.casestudy_staffhub.service.UserService;
@@ -20,10 +24,14 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,16 +40,23 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    UserDAO userDao;
+    private UserDAO userDao;
 
     @Autowired
     private DepartmentDAO departmentDao;
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private TrainingDAO trainingDao;
+
+    @Autowired
+    private UserTrainingDAO userTrainingDao;
+
 
     @GetMapping("/staff/create")
     public ModelAndView createUser(){
@@ -190,6 +205,7 @@ public class UserController {
         return response;
     }
 
+
     @PostMapping("/staff/fileUploadSubmit")
     public ModelAndView fileUploadSubmit(@RequestParam("file") MultipartFile file,
                                          @RequestParam Integer id) {
@@ -215,4 +231,56 @@ public class UserController {
 
         return response;
     }
+
+    @GetMapping("/staff/{userId}/detail")
+    public ModelAndView showUserDetail(@PathVariable Integer userId) {
+        ModelAndView response = new ModelAndView("staff/detail");
+
+        User user = userDao.findById(userId);
+        response.addObject("user", user);
+
+        return response;
+    }
+
+    @PostMapping("/staff/{userId}/addTraining")
+    public ModelAndView addTraining(@PathVariable Integer userId,
+                                    @RequestParam Integer trainingId,
+                                    @RequestParam String enrollmentDate,
+                                    @RequestParam String status,
+                                    RedirectAttributes redirectAttributes) throws ParseException {
+        ModelAndView response = new ModelAndView("staff/addTraining");
+        log.debug("Adding training for userId: " + userId);
+
+        User user = userDao.findById(userId);
+        Training training = trainingDao.findById(trainingId);
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = dateFormatter.parse(enrollmentDate);
+
+        UserTraining userTraining = new UserTraining();
+        userTraining.setEnrollmentDate(date);
+        userTraining.setUser(user);
+        userTraining.setTraining(training);
+        userTraining.setStatus(status);
+        userTrainingDao.save(userTraining);
+
+        response.addObject("user", user);
+        response.setViewName("redirect:/staff/" + userId + "/detail");
+
+        return response;
+    }
+
+
+    @GetMapping("/staff/addTraining")
+    public ModelAndView showAddTrainingForm(@RequestParam Integer userId) {
+        ModelAndView response = new ModelAndView("staff/addTraining");
+
+        List<Training> trainingList = trainingDao.findAll();
+
+        response.addObject("userId", userId);
+        response.addObject("trainingList", trainingList);
+
+        return response;
+    }
+
 }
