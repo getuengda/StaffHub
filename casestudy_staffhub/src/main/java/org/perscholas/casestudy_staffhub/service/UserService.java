@@ -1,6 +1,7 @@
 package org.perscholas.casestudy_staffhub.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.perscholas.casestudy_staffhub.database.dao.DepartmentDAO;
 import org.perscholas.casestudy_staffhub.database.dao.TrainingDAO;
 import org.perscholas.casestudy_staffhub.database.dao.UserDAO;
@@ -9,8 +10,10 @@ import org.perscholas.casestudy_staffhub.database.entity.Department;
 import org.perscholas.casestudy_staffhub.database.entity.Training;
 import org.perscholas.casestudy_staffhub.database.entity.User;
 import org.perscholas.casestudy_staffhub.database.entity.UserTraining;
+import org.perscholas.casestudy_staffhub.formbean.RegisterUserFormBean;
 import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -37,6 +40,30 @@ public class UserService {
 
     @Autowired
     private UserTrainingDAO userTrainingDao;
+
+    @Lazy
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public User createNewUser(RegisterUserFormBean form) {
+        User user = new User();
+
+        user.setEmail(form.getEmail());
+
+        String encoded = passwordEncoder.encode(form.getPassword());
+        log.debug("Encoded password: " + encoded);
+        user.setPassword(encoded);
+        user.setFirstName(form.getFirstName());
+        user.setLastName(form.getLastName());
+        // this will create a date in  the database with the current time (right now)
+        user.setJobTitle(form.getJobTitle());
+        user.setAddress(form.getAddress());
+        user.setOffice_Id(form.getOffice_Id());
+        user.setImageUrl(form.getImageUrl());
+        user.setCreateDate(new Date());
+
+        return userDao.save(user);
+    }
 
     public User createUser(UserFormBean form) {
         log.info("firstName: " + form.getFirstName());
@@ -73,6 +100,7 @@ public class UserService {
         // if the employee is null then we know that this is a create and we have to make a new object
         if ( user == null ) {
             user = new User();
+
         }
 
         user.setDepartment(department);

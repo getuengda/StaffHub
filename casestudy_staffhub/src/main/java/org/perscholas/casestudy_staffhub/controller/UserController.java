@@ -14,6 +14,7 @@ import org.perscholas.casestudy_staffhub.database.entity.Training;
 import org.perscholas.casestudy_staffhub.database.entity.User;
 import org.perscholas.casestudy_staffhub.database.entity.UserTraining;
 import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
+import org.perscholas.casestudy_staffhub.security.AuthenticatedUserService;
 import org.perscholas.casestudy_staffhub.service.DepartmentService;
 import org.perscholas.casestudy_staffhub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,8 @@ public class UserController {
     @Autowired
     private UserTrainingDAO userTrainingDao;
 
+    @Autowired
+    AuthenticatedUserService authenticatedUserService;
 
     @GetMapping("/staff/create")
     public ModelAndView createUser(){
@@ -102,6 +105,24 @@ public class UserController {
         response.setViewName("redirect:/staff/edit/" + u.getId() + "?success=Staff Saved Successfully");
 
         return response;
+    }
+
+    @GetMapping("/staff/myUser")
+    public void myStaff() {
+        ModelAndView response = new ModelAndView("staff/create");
+        log.info("######### In my staff ##############");
+
+        // 1) Use the authenticated user service to find the logged in user
+        User user = authenticatedUserService.loadCurrentUser();
+
+        // 2) Create a DAO method that will find by userId
+        // 3) use the authenticated user id to find a list of all users created by this user
+        List<User> users = (List<User>) userDao.findById(user.getId());
+
+        // 4) loop over the customers created and log.debug the customer id and customer last name
+        for ( User user1 : users ) {
+            log.debug("user: id = " + user1.getId() + " last name = " + user1.getLastName());
+        }
     }
 
     @GetMapping("/staff/edit/{userId}")

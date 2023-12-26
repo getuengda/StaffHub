@@ -67,7 +67,33 @@
                                  <div class="dropdown-divider"></div>
                                  <a class="dropdown-item" href="#">Separated link</a>
                           </div>
-                </li>
+                   </li>
+                   <sec:authorize access="!isAuthenticated()">
+                       <li class="nav-item dropdown">
+                       <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">User Login/Registration</a>
+                       <div class="dropdown-menu">
+                           <a class="dropdown-item" href="/auth/register">User Registration</a>
+                           <a class="dropdown-item" href="/auth/login">Login</a>
+                           <div class="dropdown-divider"></div>
+                       </div>
+                       </li>
+                   </sec:authorize>
+                   <sec:authorize access="hasAnyAuthority('ADMIN')">
+                       <li class="nav-item">
+                           <a class="nav-link" href="">Admin</a>
+                       </li>
+                   </sec:authorize>
+                   <sec:authorize access="isAuthenticated()">
+                       <li class="nav-item">
+                           <a class="nav-link" href="/auth/logout">Logout</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href=""><sec:authentication property="principal.username" /></a>
+                       </li>
+                   </sec:authorize>
+                    <li class="nav-item">
+                          <a class="nav-link"href="/admin/index">Secured Request</a>
+                   </li>
             </ul>
         </div>
     </div>
