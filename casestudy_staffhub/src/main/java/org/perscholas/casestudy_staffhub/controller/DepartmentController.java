@@ -172,4 +172,23 @@ public class DepartmentController {
 
         return response;
     }
+
+    @GetMapping("/department/showAll")
+    public ModelAndView showAllDepartment() {
+        ModelAndView response = new ModelAndView("department/showAll");
+        log.info("In the department showAllDepartment controller method firstName");
+
+        // Fetch all departments
+        List<Department> departments = departmentService.getAllDepartments();
+
+        // Add departments to the model
+        response.addObject("departmentVar", departments);
+
+        for(Department department : departments){
+            log.info("department: id= " + department.getId() + "Department Name = " + department.getDepartmentName());
+            log.info("department: id= " + department.getId() + "Description = " + department.getDescription());
+        }
+
+        return response;
+    }
 }

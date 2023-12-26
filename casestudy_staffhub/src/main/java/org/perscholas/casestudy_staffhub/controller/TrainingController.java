@@ -172,4 +172,22 @@ public class TrainingController {
         return response;
     }
 
+    @GetMapping("/training/showAll")
+    public ModelAndView showAllTraining() {
+        ModelAndView response = new ModelAndView("training/showAll");
+        log.info("In the training showAllTraining controller method");
+
+        // Fetch all trainings
+        List<Training> trainings = trainingService.getAllTrainings();
+
+        // Add trainings to the model
+        response.addObject("trainingVar", trainings);
+
+        for(Training training : trainings){
+            log.info("training: id= " + training.getId() + "Training Name = " + training.getTrainingName());
+        }
+
+        return response;
+    }
+
 }

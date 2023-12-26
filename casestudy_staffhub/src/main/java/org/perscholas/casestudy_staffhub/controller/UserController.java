@@ -3,6 +3,8 @@ package org.perscholas.casestudy_staffhub.controller;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.perscholas.casestudy_staffhub.database.dao.DepartmentDAO;
@@ -14,6 +16,7 @@ import org.perscholas.casestudy_staffhub.database.entity.Training;
 import org.perscholas.casestudy_staffhub.database.entity.User;
 import org.perscholas.casestudy_staffhub.database.entity.UserTraining;
 import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
+import org.perscholas.casestudy_staffhub.formbean.UserTrainingFormBean;
 import org.perscholas.casestudy_staffhub.security.AuthenticatedUserService;
 import org.perscholas.casestudy_staffhub.service.DepartmentService;
 import org.perscholas.casestudy_staffhub.service.UserService;
@@ -60,6 +63,7 @@ public class UserController {
 
     @Autowired
     AuthenticatedUserService authenticatedUserService;
+
 
     @GetMapping("/staff/create")
     public ModelAndView createUser(){
