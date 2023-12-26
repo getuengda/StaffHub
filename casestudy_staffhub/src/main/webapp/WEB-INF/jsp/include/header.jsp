@@ -40,7 +40,6 @@
                             <a class="dropdown-item" href="/staff/search">Search Staff</a>
                             <a class="dropdown-item" href="/staff/find">Find Staff</a>
                             <a class="dropdown-item" href="/staff/showAll">Show All Staffs</a>
-                            <a class="dropdown-item" href="/staff/addTraining">Add Trainings</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Separated link</a>
                         </div>

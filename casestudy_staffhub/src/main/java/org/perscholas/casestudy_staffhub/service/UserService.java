@@ -2,13 +2,20 @@ package org.perscholas.casestudy_staffhub.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.perscholas.casestudy_staffhub.database.dao.DepartmentDAO;
+import org.perscholas.casestudy_staffhub.database.dao.TrainingDAO;
 import org.perscholas.casestudy_staffhub.database.dao.UserDAO;
+import org.perscholas.casestudy_staffhub.database.dao.UserTrainingDAO;
 import org.perscholas.casestudy_staffhub.database.entity.Department;
+import org.perscholas.casestudy_staffhub.database.entity.Training;
 import org.perscholas.casestudy_staffhub.database.entity.User;
+import org.perscholas.casestudy_staffhub.database.entity.UserTraining;
 import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,6 +31,12 @@ public class UserService {
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private TrainingDAO trainingDao;
+
+    @Autowired
+    private UserTrainingDAO userTrainingDao;
 
     public User createUser(UserFormBean form) {
         log.info("firstName: " + form.getFirstName());
@@ -73,6 +86,30 @@ public class UserService {
         user.setImageUrl(form.getImageUrl());
 
         return userDao.save(user);
+    }
+
+    public List<User> getAllUsers(){
+        return userDao.findAll();
+    }
+
+    public void addTraining(Integer userId, Integer trainingId, String enrollmentDate, String status) throws ParseException {
+
+        Training training = trainingDao.findById(trainingId);
+        User user = userDao.findById(userId);
+
+
+        // if (employee.getTrainings().stream().noneMatch(et -> et.getTraining().equals(training))) {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = dateFormatter.parse(enrollmentDate);
+
+        UserTraining userTraining = new UserTraining();
+        // employeeTraining.setEnrollmentDate(new Date());
+        userTraining.setEnrollmentDate(date);
+        userTraining.setUser(user);
+        userTraining.setTraining(training);
+        userTraining.setStatus(status);
+        userTrainingDao.save(userTraining);
+        //}
     }
 
 }

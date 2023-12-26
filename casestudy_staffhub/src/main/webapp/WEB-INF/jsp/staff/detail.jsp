@@ -30,6 +30,7 @@
                                     <td>Office ID</td>
                                     <td>Address</td>
                                     <td>Image</td>
+                                    <td>Add Training</td>
                                 </tr>
                                 <tr>
                                     <td>${user.id}</td>
@@ -39,7 +40,10 @@
                                     <td>${user.jobTitle}</td>
                                     <td>${user.office_Id}</td>
                                     <td>${user.address}</td>
-                                    <td><img src="${user.imageUrl}" style="width:30px; height: 30px"></td>
+                                    <td><img src="${user.imageUrl}" alt="User Image" style="width:30px; height: 30px"></td>
+                                    <td>
+                                        <a href="/staff/addTraining?userId=${user.id}">Add Training</a>
+                                    </td>
                                 </tr>
                             </table>
 
