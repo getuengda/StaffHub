@@ -304,4 +304,23 @@ public class UserController {
         return response;
     }
 
+    @GetMapping("/staff/showAll")
+    public ModelAndView showAllStaff() {
+        ModelAndView response = new ModelAndView("staff/showAll");
+        log.debug("In the user showAllStaff controller method firstName");
+
+        // Fetch all employees
+        List<User> users = userService.getAllUsers();
+
+        // Add employees to the model
+        response.addObject("userVar", users);
+
+        for(User user : users){
+            log.debug("user: id= " + user.getId() + "first name = " + user.getFirstName());
+            log.debug("user: id= " + user.getId() + "last name = " + user.getLastName());
+        }
+
+        return response;
+    }
+
 }
