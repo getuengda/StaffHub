@@ -1,9 +1,23 @@
+body{
+        background-image: url("../images/staff_mgmt3.jpg");
+        background-size: cover;
+        z-index: -100;
+ }
 
 .bg-light1 {
     background-color: #f8f9fa;
 }
+
 .bg-light2 {
     background-color: #e9ecef;
+}
+
+.header-bg-color2 {
+    background-color:#DBC4F0;
+}
+
+.bg-lighter {
+    background-color: #F3F8FF;
 }
 
 .bg-peach {
@@ -26,14 +40,30 @@
     background-color:#DBC4F0;
 }
 
- body {
-        background-image: url("/pub/images/staff_mgmt4.jpg");
-        background-size: cover;
-        z-index: -100;
-  }
+.footer-bg-color3 {
+    background-color:#B06161;
+}
+
+
 
   .navbar {
-      height: 80px;
+      height: 100px;
       background-color: bg-light2;
 
+  }
+
+  .img-responsive.logo {
+      width: 100%;
+      max-width: 100px;
+      height: auto;
+  }
+
+  @media (max-width: 992px) {
+      .navbar-brand {
+          margin-left: 15px;
+      }
+      .navbar-nav .nav-link {
+          padding-right: .5rem;
+          padding-left: .5rem;
+      }
   }

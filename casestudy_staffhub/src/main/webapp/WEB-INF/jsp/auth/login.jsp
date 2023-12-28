@@ -14,7 +14,7 @@
     <section class="pt-5">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-6">
+                <div class="col-4">
                     <div class="alert alert-danger w-100 mb-0 text-center">Invalid Username or Password</div>
                 </div>
             </div>
@@ -28,18 +28,18 @@
                 <!-- the action attribute on the form tag is the URL that the form will submit to when then user clicks the submit button -->
                 <form method="post" action="/auth/loginSubmit" style="width:auto; height: 300px; border: 10px solid black">
 
-                    <div class="mt-5 ml-3">
+                    <div class="col-12 mt-5 ml-0">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" style="m-3" id="username" name="username">
                     </div>
 
-                    <div class="mt-3 ml-3">
+                    <div class="col-12 mt-3 ml-0">
                         <label for="password" class="form-label">Password</label>
                         <input type="text" class="form-control" id="password" name="password">
                     </div>
 
-                    <button type="submit" class="btn btn-primary mt-4 ml-3">Submit</button>
-                    <div class="mt-5 ml-3"><p>Forget your <span style="color: darkcyan">Username</span> or <span style="color: darkcyan">Password?</span></p></div>
+                    <button type="submit" class="col-3 btn btn-primary mt-4 ml-4">Submit</button>
+                    <div class="mt-4 ml-4"><p>Forget your <span style="color: darkcyan">Username</span> or <span style="color: darkcyan">Password?</span></p></div>
                 </form>
 
             </div>

@@ -1,0 +1,373 @@
+:root {
+  --base-color: #171717;
+  --secondary-color: #a1460e;
+  --action-color: #cc6d3d;
+  --layover-color: #d2e1f36c;
+  }
+
+  body {
+  margin: 0;
+  height: 125%;
+  font-family: Arial, sans-serif;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: var(--base-color);
+  background-blend-mode: screen;
+
+  }
+
+  body::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(96, 89, 89, 0.5);
+  z-index: 1;
+  }
+
+
+  .header, .main, .footer {
+      padding: 20px;
+  }
+
+
+  .main{
+      width: 100%;
+      height: 600px;
+      height: 600px;
+      order: 2;
+      margin-top: 0.5rem;
+      border: 1px solid lightgray;
+      background-size: cover;
+      background-color: var(--base-color);
+      background-image: url(../images/fintech-investment.jpg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      opacity: 0.7;
+      cursor: pointer;
+
+    }
+
+  #myVideo {
+      right: 0;
+      left: 0;
+      min-width: 100%;
+      height: 580px;
+  }
+
+ .mission {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.125em;
+  width: auto;
+  height: 100%;
+  order: 3;
+  margin-top: .5rem;
+  border: 1px solid white;
+  background-size: cover;
+}
+
+#values{
+  width: 380px;
+  height: 380px;
+  border: 1px solid white;
+  background-color: var(--action-color);
+  background-image: url(../images/carside2.jpg);
+  background-blend-mode: darken;
+}
+
+#values h1{
+padding: 3rem 3rem;
+}
+
+#values p {
+  color: black;
+  font-weight: 700;
+  line-height: 25px;
+  padding: 0.5rem 3rem;
+
+}
+
+#technology{
+  width: 600px;
+  height: 380px;
+  border: 1px solid white;
+  background-color: var(--layover-color);
+  background-image: url(../images/muffler.jpg);
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.item img {
+width: cover;
+height: 100%vh;
+}
+
+#diversity {
+  width: 400px;
+  height: 380px;
+  border: 1px solid white;
+  background-color: var(--layover-color);
+  background-image: url(../images/muffler.jpg);
+  cursor: pointer;
+}
+
+#diversity h1{
+padding: 3rem;
+}
+
+#diversity p {
+color: black;
+font-weight: 600;
+line-height: 35px;
+padding: .5rem 3rem;
+
+}
+
+
+
+
+/* styles for screen sizes */
+
+@media screen and (max-width: 400px) {
+
+       h1 {
+        margin-top: 20px;
+        margin-bottom: 1px;
+         font-size: 14px;
+       }
+
+       h5 {
+           font-size: 12px;
+       }
+
+
+}
+
+@media screen and (min-width: 401px) {
+
+      h1 {
+        margin-top: 20px;
+        margin-bottom: 1px;
+         font-size: 16px;
+       }
+
+       h5 {
+           font-size: 14px;
+       }
+
+
+
+}
+
+@media screen and (max-width: 600px) {
+  /* .header nav ul li:not(:first-child) {
+  display: none;
+  }
+  h1 {
+    font-size: 15px;
+  } */
+
+  h1 {
+    font-size: 18px;
+    margin-top: 30px;
+  }
+
+  h5 {
+      font-size: 15px;
+  }
+
+
+  .mission {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    width: 100%;
+    height: 70%;
+    order: 3;
+    margin-top: .5rem;
+    border: 1px solid white;
+    background-size: cover;
+  }
+
+  #values{
+    width: auto;
+    height: 280px;
+    border: 1px solid white;
+
+  }
+
+  #values h1{
+    padding: 0.15rem 1rem;
+    font-size: 24px;
+    }
+
+    #values p {
+      color: black;
+      font-weight: 200;
+      line-height: 24px;
+      padding: 0.5rem 2rem;
+    }
+    #technology{
+      width: auto;
+      height: 280px;
+      border: 1px solid white;
+      opacity: 0.7;
+      cursor: pointer;
+    }
+
+    .item img {
+      width: cover;
+      height: 100%vh;
+    }
+
+    #diversity {
+      width: auto;
+      height: 280px;
+      border: 1px solid white;
+
+    }
+
+    #diversity h1{
+      padding: 0.15rem 1rem;
+      font-size: 24px;
+    }
+
+    #diversity p {
+      color: black;
+      font-weight: 200;
+      line-height: 24px;
+      padding: 0.5rem 2rem;
+
+    }
+
+    #footerP {
+      margin-top: 10px;
+      margin-left: 70px;
+    }
+}
+
+/* Tablets and small desktops */
+ @media only screen and (min-width: 600px) and (max-width: 768px) {
+  h1 {
+    font-size: 18px;
+  }
+
+  h5 {
+      font-size: 15px;
+  }
+
+
+
+
+  .mission {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    width: 100%;
+    height: 70%;
+    order: 3;
+    margin-top: .5rem;
+    border: 1px solid white;
+    background-size: cover;
+  }
+  #values{
+    width: 580px;
+    height: 380px;
+    border: 1px solid white;
+
+  }
+
+  #values h1{
+    padding: 4rem 4rem;
+    font-size: 30px;
+    }
+    #values p {
+      color: black;
+      font-weight: 200;
+      line-height: 24px;
+      padding: 2rem 4rem;
+    }
+    #technology{
+      width: 580px;
+      height: 380px;
+      border: 1px solid white;
+      background-color: var(--layover-color);
+      background-image: url(../images/muffler.jpg);
+      opacity: 0.7;
+      cursor: pointer;
+    }
+    #diversity {
+      width: 580px;
+      height: 380px;
+      border: 1px solid white;
+      background-color: var(--layover-color);
+      background-image: url(../images/muffler.jpg);
+      cursor: pointer;
+    }
+
+    #diversity h1{
+      padding: 4rem 4rem;
+      font-size: 30px;
+    }
+
+    #footerP {
+      margin-top: 110px;
+  }
+
+  .socials {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+
+  h1 {
+    font-size: 22px;
+  }
+
+  h5 {
+      font-size: 15px;
+  }
+
+
+
+  #values h1{
+      padding: 4rem 4rem;
+      font-size: 30px;
+  }
+}
+
+
+@media only screen and (min-width: 990px) {
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h5 {
+      font-size: 16px;
+  }
+
+
+
+  #footerP {
+      font-size: 14px;
+  }
+
+
+
+
+}

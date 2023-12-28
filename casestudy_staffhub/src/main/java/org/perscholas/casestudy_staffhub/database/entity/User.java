@@ -18,7 +18,7 @@ public class User {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
@@ -34,11 +34,11 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "office_id")
-    private Integer office_Id;
-
     @Column(name = "password")
     private String password;
+
+    @Column(name = "office_id")
+    private Integer office_Id;
 
     @Column(name="create_date")
     @Temporal(TemporalType.TIMESTAMP)
