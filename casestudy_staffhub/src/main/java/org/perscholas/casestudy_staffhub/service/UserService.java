@@ -12,14 +12,19 @@ import org.perscholas.casestudy_staffhub.database.entity.User;
 import org.perscholas.casestudy_staffhub.database.entity.UserTraining;
 import org.perscholas.casestudy_staffhub.formbean.RegisterUserFormBean;
 import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
+
+import org.perscholas.casestudy_staffhub.formbean.UserProfileDTO;
+import org.perscholas.casestudy_staffhub.formbean.UserTrainingFormBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 
 @Slf4j
@@ -97,7 +102,7 @@ public class UserService {
             log.info("Department not found");
         }
 
-        // if the employee is null then we know that this is a create and we have to make a new object
+        // if the staff is null then we know that this is a create and we have to make a new object
         if ( user == null ) {
             user = new User();
 
@@ -107,10 +112,15 @@ public class UserService {
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         user.setEmail(form.getEmail());
-        user.setPassword(form.getPassword());
+
+        String encoded = passwordEncoder.encode(form.getPassword());
+        log.debug("Encoded password: " + encoded);
+        user.setPassword(encoded);
+//        user.setPassword(form.getPassword());
         user.setJobTitle(form.getJobTitle());
         user.setAddress(form.getAddress());
         user.setOffice_Id(form.getOffice_Id());
+        user.setCreateDate(new Date());
         user.setImageUrl(form.getImageUrl());
 
         return userDao.save(user);
@@ -138,6 +148,66 @@ public class UserService {
         userTraining.setStatus(status);
         userTrainingDao.save(userTraining);
         //}
+    }
+
+
+        public UserProfileDTO getUserProfileById(Integer userId) {
+        User user = userDao.findById(userId);
+
+        if (user == null) {
+            return null; // or throw an exception based on your application's logic
+        }
+
+        UserProfileDTO userProfileDTO = new UserProfileDTO();
+        userProfileDTO.setId(user.getId());
+        userProfileDTO.setFirstName(user.getFirstName());
+        userProfileDTO.setLastName(user.getLastName());
+        userProfileDTO.setEmail(user.getEmail());
+        userProfileDTO.setJobTitle(user.getJobTitle());
+        userProfileDTO.setOffice_Id(user.getOffice_Id());
+        userProfileDTO.setAddress(user.getAddress());
+        userProfileDTO.setImageUrl(user.getImageUrl());
+
+        // Check if user and department are not null before accessing their attributes
+        if (user.getDepartment() != null) {
+            populateDepartmentDetails(userProfileDTO, user.getDepartment());
+        } else {
+            setDefaultDepartmentValues(userProfileDTO);
+        }
+
+            List<UserTraining> userTrainings = userTrainingDao.findByUserId(user.getId());
+            List<UserTrainingFormBean> userTrainingBeans = new ArrayList<>();
+            for (UserTraining userTraining : userTrainings) {
+                UserTrainingFormBean userTrainingBean = populateTrainingDetails(userTraining);
+                userTrainingBeans.add(userTrainingBean);
+            }
+            userProfileDTO.setUserTrainings(userTrainingBeans);
+
+
+            return userProfileDTO;
+    }
+
+        private void populateDepartmentDetails(UserProfileDTO userProfileDTO, Department department) {
+        userProfileDTO.setDepartmentId(department.getId());
+        userProfileDTO.setDepartmentName(department.getDepartmentName());
+        userProfileDTO.setDescription(department.getDescription());
+    }
+
+        private void setDefaultDepartmentValues(UserProfileDTO userProfileDTO) {
+        userProfileDTO.setDepartmentId(null);
+        userProfileDTO.setDepartmentName("N/A");
+        userProfileDTO.setDescription("N/A");
+    }
+
+    private UserTrainingFormBean populateTrainingDetails(UserTraining userTraining) {
+        UserTrainingFormBean userTrainingBean = new UserTrainingFormBean();
+        userTrainingBean.setId(userTraining.getId());
+        userTrainingBean.setUser(userTraining.getUser());
+        userTrainingBean.setTraining(userTraining.getTraining());
+        userTrainingBean.setEnrollmentDate(userTraining.getEnrollmentDate());
+        userTrainingBean.setCompletionDate(userTraining.getCompletionDate());
+        userTrainingBean.setStatus(userTraining.getStatus());
+        return userTrainingBean;
     }
 
 }

@@ -16,14 +16,14 @@
         <div class="row justify-content-center">
             <div class="col-5">
                 <!-- the action attribute on the form tag is the URL that the form will submit to when then user clicks the submit button -->
-                <form method="get" action="/auth/registerSubmit" style="width:auto; height: 780px; border: 10px solid black">
-                    <div class="mt-3 col-12">
+                <form method="get" action="/auth/registerSubmit" style="width:auto; height: 840px; border: 10px solid black">
+                    <div class="mt-5 col-12">
                         <label for="firstName" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="firstName" name="firstName" value="${form.firstName}" aria-describedby="firstNameHelp">
                         <div id="firstNameHelp" class="form-text">Please let us know your first name</div>
                     </div>
                    <c:if test="${errors.hasFieldErrors('firstName')}">
-                       <div class="error" style="color:red">
+                       <div class="error" style="color:red; margin-left:15px;">
                            <c:forEach items="${errors.getFieldErrors('firstName')}" var="error">
                                ${error.defaultMessage}<br>
                            </c:forEach>
@@ -34,7 +34,7 @@
                          <input type="text" class="form-control" id="lastName" name="lastName" value="${form.lastName}">
                     </div>
                      <c:if test="${errors.hasFieldErrors('lastName')}">
-                             <div class="error" style="color:red">
+                             <div class="error" style="color:red; margin-left:15px;">
                                  <c:forEach items="${errors.getFieldErrors('lastName')}" var="error">
                                      ${error.defaultMessage}<br>
                                  </c:forEach>
@@ -45,7 +45,7 @@
                         <input type="text" class="form-control" id="email" name="email" value="${form.email}">
                     </div>
                     <c:if test="${errors.hasFieldErrors('email')}">
-                        <div style="color:red">
+                        <div style="color:red; margin-left:15px;">
                             <c:forEach items="${errors.getFieldErrors('email')}" var="error">
                                 ${error.defaultMessage}<br>
                             </c:forEach>
@@ -56,7 +56,7 @@
                         <input type="text" class="form-control" id="password" name="password" value="${form.password}">
                     </div>
                     <c:if test="${errors.hasFieldErrors('password')}">
-                        <div style="color:red">
+                        <div style="color:red; margin-left:15px;">
                             <c:forEach items="${errors.getFieldErrors('password')}" var="error">
                                 ${error.defaultMessage}<br>
                             </c:forEach>
@@ -67,7 +67,7 @@
                         <input type="text" class="form-control" id="confirmPassword" name="confirmPassword" value="${form.confirmPassword}">
                     </div>
                     <c:if test="${errors.hasFieldErrors('confirmPassword')}">
-                        <div style="color:red">
+                        <div style="color:red; margin-left:15px;">
                             <c:forEach items="${errors.getFieldErrors('confirmPassword')}" var="error">
                                 ${error.defaultMessage}<br>
                             </c:forEach>
@@ -106,7 +106,7 @@
                     </c:if>
 
 
-                    <button type="submit" class="btn btn-primary mt-5 ml-4 col-3">Submit</button>
+                    <button type="submit" class="btn btn-primary mt-3 ml-4 col-3">Submit</button>
                 </form>
             </div>
         </div>

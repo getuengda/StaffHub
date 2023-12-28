@@ -3,8 +3,6 @@ package org.perscholas.casestudy_staffhub.controller;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.perscholas.casestudy_staffhub.database.dao.DepartmentDAO;
@@ -16,13 +14,14 @@ import org.perscholas.casestudy_staffhub.database.entity.Training;
 import org.perscholas.casestudy_staffhub.database.entity.User;
 import org.perscholas.casestudy_staffhub.database.entity.UserTraining;
 import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
-import org.perscholas.casestudy_staffhub.formbean.UserTrainingFormBean;
+import org.perscholas.casestudy_staffhub.formbean.UserProfileDTO;
 import org.perscholas.casestudy_staffhub.security.AuthenticatedUserService;
 import org.perscholas.casestudy_staffhub.service.DepartmentService;
 import org.perscholas.casestudy_staffhub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -230,7 +229,6 @@ public class UserController {
         return response;
     }
 
-
     @PostMapping("/staff/fileUploadSubmit")
     public ModelAndView fileUploadSubmit(@RequestParam("file") MultipartFile file,
                                          @RequestParam Integer id) {
@@ -313,10 +311,10 @@ public class UserController {
         ModelAndView response = new ModelAndView("staff/showAll");
         log.debug("In the user showAllStaff controller method firstName");
 
-        // Fetch all employees
+        // Fetch all staff
         List<User> users = userService.getAllUsers();
 
-        // Add employees to the model
+        // Add staffs to the model
         response.addObject("userVar", users);
 
         for(User user : users){
@@ -325,6 +323,21 @@ public class UserController {
         }
 
         return response;
+    }
+
+    @GetMapping("staff/profile")
+    public String userProfile(@RequestParam("id") Integer userId, Model model) {
+        log.debug("In the user profile controller method id: " + userId);
+
+        UserProfileDTO userProfile = userService.getUserProfileById(userId);
+
+        if (userProfile == null) {
+            return "redirect:/error";
+        }
+
+        model.addAttribute("userProfile", userProfile);
+
+        return "staff/profile";
     }
 
 }

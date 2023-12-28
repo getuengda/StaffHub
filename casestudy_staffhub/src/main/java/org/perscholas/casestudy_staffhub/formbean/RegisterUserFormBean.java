@@ -18,12 +18,12 @@ public class RegisterUserFormBean {
     @Pattern(regexp = "^[a-zA-Z]{1,30}$")
     private String firstName;
 
-    @NotEmpty(message="First Name is required.")
+    @NotEmpty(message="Last Name is required.")
     @Length(max= 45, message = "Last Name must be less than 45 characters.")
     private String lastName;
 
     @Email(message = "Email must be a valid email address")
-    @NotEmpty(message = "Password cannot be empty")
+    @NotEmpty(message = "Email cannot be empty")
     private String email;
 
     @Length(min=8, message = "Password must be at least 8 characters long")

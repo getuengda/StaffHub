@@ -17,6 +17,7 @@ public class TrainingService {
     @Autowired
     private TrainingDAO trainingDao;
 
+
     public Training createTraining(TrainingFormBean form) {
         log.info("trainingName: " + form.getTrainingName());
         log.info("datePosted: " + form.getDatePosted());

@@ -49,20 +49,19 @@
                                 <div class="col-12">
                                       <h1 class="text-center pb-3">Staffs Found ${userVar.size()}</h1>
 
-                        <table class="table table-hover">
+                        <table class="table table-hover" style="margin-left: 20px">
                             <tr>
                                 <td>Id</td>
                                 <td>First Name</td>
                                 <td>Last Name</td>
                                 <td>Email</td>
-                                <td>Password</td>
                                 <td>Job Title</td>
                                 <td>Office ID</td>
                                 <td>Address</td>
-                                <td>Image</td>
                                 <td>Edit</td>
                                 <td>Detail</td>
                                 <td>Upload</td>
+                                <td>Profile</td>
                             </tr>
                             <c:forEach items="${userVar}" var="user">
                                 <tr>
@@ -70,11 +69,9 @@
                                     <td>${user.firstName}</td>
                                     <td>${user.lastName}</td>
                                     <td>${user.email}</td>
-                                    <td>${user.password}</td>
                                     <td>${user.jobTitle}</td>
                                     <td>${user.office_Id}</td>
                                     <td>${user.address}</td>
-                                    <td><img src="${user.imageUrl}" style="max-width:100px"></td>
                                     <td>
                                         <a href="/staff/edit/${user.id}">Edit</a>
                                     </td>
@@ -83,6 +80,9 @@
                                     </td>
                                     <td>
                                         <a href="/staff/fileupload?id=${user.id}">Upload</a>
+                                    </td>
+                                    <td>
+                                        <a href="/staff/profile?id=${user.id}">Profile</a>
                                     </td>
                                 </tr>
                             </c:forEach>
