@@ -94,20 +94,21 @@
                             </tr>
                         </table>
 
-                        <h3 class="text-center pb-3">You are Enrolled for the following Trainings</h3>
+                        <h3 class="text-center pb-3">Staff Training Information</h3>
                         <ol>
                             <c:forEach items="${userProfile.userTrainings}" var="userTraining">
                                 <li>
-                                    ID: ${userTraining.training.id} <br/>
-                                    Name: ${userTraining.training.trainingName} <br/>
-                                    Enrollment Date: ${userTraining.enrollmentDate} <br/>
-                                    Completion Date: ${userTraining.completionDate} <br/>
-                                    Status: ${userTraining.status}
+                                ${empty userProfile.jobTitle ? 'N/A' : userProfile.jobTitle}
+                                    ID: ${empty userTraining.training.id ? 'N/A' : userTraining.training.id} <br/>
+                                    Name: ${empty userTraining.training.trainingName ? 'N/A' : userTraining.training.trainingName} <br/>
+                                    Enrollment Date: ${empty userTraining.enrollmentDate ? 'N/A' : userTraining.enrollmentDate} <br/>
+                                    Completion Date: ${empty userTraining.completionDate ? 'N/A' : userTraining.completionDate} <br/>
+                                    Status: ${empty userTraining.status ? 'N/A' : userTraining.status}
                                 </li>
                             </c:forEach>
                         </ol>
 
-                        <form action="/staff/edit/${user.id}">
+                        <form action="/staff/edit/${userProfile.id}">
                             <button type="submit" class="btn col-12 btn-primary">Edit</button>
                         </form>
                     </div>

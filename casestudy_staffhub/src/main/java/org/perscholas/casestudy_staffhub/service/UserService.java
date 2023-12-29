@@ -105,7 +105,6 @@ public class UserService {
         // if the staff is null then we know that this is a create and we have to make a new object
         if ( user == null ) {
             user = new User();
-
         }
 
         user.setDepartment(department);
@@ -116,7 +115,6 @@ public class UserService {
         String encoded = passwordEncoder.encode(form.getPassword());
         log.debug("Encoded password: " + encoded);
         user.setPassword(encoded);
-//        user.setPassword(form.getPassword());
         user.setJobTitle(form.getJobTitle());
         user.setAddress(form.getAddress());
         user.setOffice_Id(form.getOffice_Id());
@@ -155,7 +153,7 @@ public class UserService {
         User user = userDao.findById(userId);
 
         if (user == null) {
-            return null; // or throw an exception based on your application's logic
+            return null;
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
@@ -168,23 +166,25 @@ public class UserService {
         userProfileDTO.setAddress(user.getAddress());
         userProfileDTO.setImageUrl(user.getImageUrl());
 
-        // Check if user and department are not null before accessing their attributes
+        // Checking if user and department are not null before accessing their attributes
         if (user.getDepartment() != null) {
             populateDepartmentDetails(userProfileDTO, user.getDepartment());
         } else {
             setDefaultDepartmentValues(userProfileDTO);
         }
 
-            List<UserTraining> userTrainings = userTrainingDao.findByUserId(user.getId());
-            List<UserTrainingFormBean> userTrainingBeans = new ArrayList<>();
-            for (UserTraining userTraining : userTrainings) {
-                UserTrainingFormBean userTrainingBean = populateTrainingDetails(userTraining);
-                userTrainingBeans.add(userTrainingBean);
-            }
-            userProfileDTO.setUserTrainings(userTrainingBeans);
+
+        List<UserTraining> userTrainings = userTrainingDao.findByUserId(user.getId());
+        List<UserTrainingFormBean> userTrainingBeans = new ArrayList<>();
+        for (UserTraining userTraining : userTrainings) {
+            UserTrainingFormBean userTrainingBean = populateTrainingDetails(userTraining);
+            userTrainingBeans.add(userTrainingBean);
+        }
+
+        userProfileDTO.setUserTrainings(userTrainingBeans);
 
 
-            return userProfileDTO;
+        return userProfileDTO;
     }
 
         private void populateDepartmentDetails(UserProfileDTO userProfileDTO, Department department) {
@@ -210,4 +210,12 @@ public class UserService {
         return userTrainingBean;
     }
 
+    private void setDefaultTrainingValues(UserTrainingFormBean userTrainingBean) {
+        userTrainingBean.setId(null);
+        userTrainingBean.setUser(null);
+        userTrainingBean.setTraining(null);
+        userTrainingBean.setEnrollmentDate(new Date("N/A"));
+        userTrainingBean.setCompletionDate(new Date("N/A"));
+        userTrainingBean.setStatus("N/A");
+    }
 }

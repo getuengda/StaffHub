@@ -115,14 +115,11 @@ public class UserController {
         ModelAndView response = new ModelAndView("staff/create");
         log.info("######### In my staff ##############");
 
-        // 1) Use the authenticated user service to find the logged in user
+        //Use the authenticated user service to find the logged-in user
         User user = authenticatedUserService.loadCurrentUser();
 
-        // 2) Create a DAO method that will find by userId
-        // 3) use the authenticated user id to find a list of all users created by this user
         List<User> users = (List<User>) userDao.findById(user.getId());
 
-        // 4) loop over the customers created and log.debug the customer id and customer last name
         for ( User user1 : users ) {
             log.debug("user: id = " + user1.getId() + " last name = " + user1.getLastName());
         }
@@ -201,23 +198,6 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/staff/detail")
-    public ModelAndView userDetail(@RequestParam(required = false) Integer id) {
-        ModelAndView response = new ModelAndView("staff/detail");
-        log.debug("In the user detail controller method id: " + id);
-
-        // Fetch single user by id
-        User user = userDao.findById(id);
-
-        if (user != null) {
-            response.addObject("user", user);
-        } else {
-            log.warn("User with id " + id + " not found");
-        }
-
-        return response;
-    }
-
     @GetMapping("/staff/fileupload")
     public ModelAndView fileUpload(@RequestParam Integer id) {
         ModelAndView response = new ModelAndView("staff/fileupload");
@@ -238,7 +218,6 @@ public class UserController {
         log.info("Size     = " + file.getSize());
         log.info("Type     = " + file.getContentType());
 
-
         // Get the file and save it somewhere
         File f = new File("./src/main/webapp/pub/images/" + file.getOriginalFilename());
         try (OutputStream outputStream = new FileOutputStream(f.getAbsolutePath())) {
@@ -251,6 +230,23 @@ public class UserController {
         User user = userDao.findById(id);
         user.setImageUrl("/pub/images/" + file.getOriginalFilename());
         userDao.save(user);
+
+        return response;
+    }
+
+    @GetMapping("/staff/detail")
+    public ModelAndView userDetail(@RequestParam(required = false) Integer id) {
+        ModelAndView response = new ModelAndView("staff/detail");
+        log.debug("In the user detail controller method id: " + id);
+
+        // Fetch single user by id
+        User user = userDao.findById(id);
+
+        if (user != null) {
+            response.addObject("user", user);
+        } else {
+            log.warn("User with id " + id + " not found");
+        }
 
         return response;
     }
@@ -323,6 +319,21 @@ public class UserController {
         }
 
         return response;
+    }
+
+    @GetMapping("/staff/{userId}/profile")
+    public String showUserProfile(@PathVariable Integer userId) {
+
+        ModelAndView response = new ModelAndView("staff/profile");
+
+        UserProfileDTO userProfile = userService.getUserProfileById(userId);
+
+        if (userProfile == null) {
+            return "redirect:/error";
+        }
+
+        response.addObject("userProfile", userProfile);
+        return String.valueOf(response);
     }
 
     @GetMapping("staff/profile")
