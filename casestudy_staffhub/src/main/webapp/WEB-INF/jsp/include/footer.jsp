@@ -2,7 +2,7 @@
 <section class="footer-bg-color2 pt-5 pb-5">
     <div class="container">
         <div class="row">
-            <div class="col-12 text-center">
+            <div class="col-12 text-center"; style="color: white; font-size: 12px">
                  Copyright &copy; 2023 Staff Hub Website - All rights reserved.
             </div>
         </div>

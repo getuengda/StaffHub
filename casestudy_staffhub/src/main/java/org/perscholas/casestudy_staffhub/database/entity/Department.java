@@ -15,9 +15,6 @@ public class Department {
     @Column(name = "id")
     private Integer id;
 
-//    @OneToMany( mappedBy = "employees", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    List<Employee> employeeList;
-
     @Column(name = "department_name")
     private String departmentName;
 

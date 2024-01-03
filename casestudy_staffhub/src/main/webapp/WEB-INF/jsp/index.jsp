@@ -5,25 +5,27 @@
     <div class="bg-light2 pt-5 pb-5">
        <div class="row">
            <div class="col-12 text-center">
+
                <form id="searchForm" action="">
 
-                   <div class="row justify-content-center">
-                       <section id="searchFormSection">
+                   <div class="row justify-content-center mt-5">
+                         <section id="searchFormSection">
 
-                           <label for="searchType">Search for:</label>
-                           <select id="searchType" name="searchType" onchange="changeAction(this)">
-                               <option value="/training/search">Trainings</option>
-                               <option value="/department/search">Departments</option>
-                           </select>
-                           <div class="col-12 ml-2 mr-2" id="inputField"></div>
-                           <div class="row justify-content-center pt-4">
-                               <div class="col-12 text-center">
-                                   <button type="submit" class="btn btn-primary">Submit</button>
+                             <label for="searchType">Search for:</label>
+                             <div id="searchType">
+                                 <input type="radio" id="trainings" name="searchType" value="/training/search" onchange="changeAction(this)">
+                                 <label for="trainings">Trainings</label>
+                                 <input type="radio" id="departments" name="searchType" value="/department/search" onchange="changeAction(this)">
+                                 <label for="departments">Departments</label>
+                             </div>
+                           <div class="row justify-content-center pt-4 pl-5" style="display: flex; align-items: center;">
+                               <div class="col-7 mr-0 ml-5 pl-5" id="inputField" style="flex-grow: 1;"></div>
+                               <div class="col-3 text-left ml-0 p-0">
+                                   <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                                </div>
                            </div>
-
-                       </section>
-                   </div>
+                         </section>
+                     </div>
 
                </form>
            </div>
@@ -203,26 +205,34 @@
 
 
              function changeAction(element) {
-                     document.getElementById('searchForm').action = element.value;
-                     var inputField = document.getElementById('inputField');
-                     inputField.innerHTML = '';
-                     var input = document.createElement('input');
-                     input.type = 'text';
-                     input.className = 'form-control';
-                     if (element.value === '/training/search') {
-                         input.id = 'trainingName';
-                         input.name = 'trainingName';
-                         input.placeholder = 'Search by training name';
-                     } else {
-                         input.id = 'departmentName';
-                         input.name = 'departmentName';
-                         input.placeholder = 'Search by department name';
-                     }
-                     inputField.appendChild(input);
-                 }
-                 window.onload = function() {
-                     changeAction(document.getElementById('searchType'));
-                 };
+                      document.getElementById('searchForm').action = element.value;
+                      var inputField = document.getElementById('inputField');
+                      inputField.innerHTML = '';
+                      var input = document.createElement('input');
+                      input.type = 'text';
+                      input.className = 'form-control';
+                      if (element.value === '/training/search') {
+                          input.id = 'trainingName';
+                          input.name = 'trainingName';
+                          input.placeholder = 'Search by training name';
+                      } else {
+                          input.id = 'departmentName';
+                          input.name = 'departmentName';
+                          input.placeholder = 'Search by department name';
+                      }
+                      inputField.appendChild(input);
+                  }
+                  window.onload = function() {
+                      changeAction(document.getElementById('searchType'));
+                  };
+
+               document.getElementById('searchForm').addEventListener('submit', function(event) {
+                   var searchType = document.querySelector('input[name="searchType"]:checked');
+                   if(!searchType) {
+                       event.preventDefault();
+                       alert('Please select either Training or Department before searching');
+                   }
+               });
 
             </script>
 

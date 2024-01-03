@@ -22,16 +22,13 @@ public class AuthenticatedUserService {
     private AuthenticationManager authenticationManager;
 
     public String getCurrentUsername() {
-        // this function will return the username of the currently logged in user
-        // or it will return null if no user is logged in
-        // in our case the username is the email
+
         SecurityContext context = SecurityContextHolder.getContext();
         if (context != null && context.getAuthentication() != null) {
             final org.springframework.security.core.userdetails.User principal =
                     (org.springframework.security.core.userdetails.User) context.getAuthentication().getPrincipal();
             return principal.getUsername();
         } else {
-            // there is no spring security context for this user so they are not logged in
             return null;
         }
     }

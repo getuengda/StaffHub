@@ -51,4 +51,6 @@ public class UserFormBean {
     private String imageUrl;
 
     private String address;
+
+    private String userType;
 }

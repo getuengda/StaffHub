@@ -25,8 +25,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-4">
-                <!-- the action attribute on the form tag is the URL that the form will submit to when then user clicks the submit button -->
-                <form method="post" action="/auth/loginSubmit" style="width:auto; height: 300px; border: 10px solid black">
+                <form method="post" action="/auth/loginSubmit" style="width:auto; height: 400px; border: 20px solid grey; background-color: rgb(248, 243, 243);">
 
                     <div class="col-12 mt-5 ml-0">
                         <label for="username" class="form-label">Username</label>

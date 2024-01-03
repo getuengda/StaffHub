@@ -53,4 +53,7 @@ public class User {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "user_type")
+    private String userType;
+
 }

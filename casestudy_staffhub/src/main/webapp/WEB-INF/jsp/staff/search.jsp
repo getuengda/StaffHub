@@ -59,9 +59,9 @@
                                 <td>Office ID</td>
                                 <td>Address</td>
                                 <td>Edit</td>
+                                <td>Profile</td>
                                 <td>Detail</td>
                                 <td>Upload</td>
-                                <td>Profile</td>
                             </tr>
                             <c:forEach items="${userVar}" var="user">
                                 <tr>
@@ -76,13 +76,13 @@
                                         <a href="/staff/edit/${user.id}">Edit</a>
                                     </td>
                                     <td>
+                                        <a href="/staff/profile?id=${user.id}">Profile</a>
+                                    </td>
+                                    <td>
                                         <a href="/staff/detail?id=${user.id}">Detail</a>
                                     </td>
                                     <td>
                                         <a href="/staff/fileupload?id=${user.id}">Upload</a>
-                                    </td>
-                                    <td>
-                                        <a href="/staff/profile?id=${user.id}">Profile</a>
                                     </td>
                                 </tr>
                             </c:forEach>
