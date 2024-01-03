@@ -9,23 +9,24 @@
            <div class="col-12 text-center">
                <form id="searchForm" action="">
 
-                   <div class="row justify-content-center">
-                       <section id="searchFormSection">
+                  <div class="row justify-content-center">
+                      <section id="searchFormSection">
 
-                           <label for="searchType">Search for:</label>
-                           <select id="searchType" name="searchType" onchange="changeAction(this)">
-                               <option value="/training/search">Trainings</option>
-                               <option value="/department/search">Departments</option>
-                           </select>
-                           <div class="col-12 ml-2 mr-2" id="inputField"></div>
-                           <div class="row justify-content-center pt-4">
-                               <div class="col-12 text-center">
-                                   <button type="submit" class="btn btn-primary">Submit</button>
-                               </div>
-                           </div>
-
-                       </section>
-                   </div>
+                          <label for="searchType">Search for:</label>
+                          <div id="searchType">
+                              <input type="radio" id="trainings" name="searchType" value="/training/search" onchange="changeAction(this)">
+                              <label for="trainings">Trainings</label>
+                              <input type="radio" id="departments" name="searchType" value="/department/search" onchange="changeAction(this)">
+                              <label for="departments">Departments</label>
+                          </div>
+                        <div class="row justify-content-center pt-4 pl-5" style="display: flex; align-items: center;">
+                            <div class="col-7 mr-0 ml-5 pl-5" id="inputField" style="flex-grow: 1;"></div>
+                            <div class="col-3 text-left ml-0 p-0">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                      </section>
+                  </div>
 
                </form>
            </div>
@@ -226,6 +227,15 @@
                  window.onload = function() {
                      changeAction(document.getElementById('searchType'));
                  };
+
+              document.getElementById('searchForm').addEventListener('submit', function(event) {
+                  var searchType = document.querySelector('input[name="searchType"]:checked');
+                  if(!searchType) {
+                      event.preventDefault();
+                      alert('Please select either Training or Department before searching');
+                  }
+              });
+
 
             </script>
 

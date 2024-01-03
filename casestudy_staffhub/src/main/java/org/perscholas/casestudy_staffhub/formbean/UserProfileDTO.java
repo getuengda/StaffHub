@@ -41,4 +41,5 @@ public class UserProfileDTO {
     public List<UserTrainingFormBean> getUserTrainings() {
         return userTrainings;
     }
+
 }

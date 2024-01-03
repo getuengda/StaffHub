@@ -2,7 +2,7 @@
 <jsp:include page="../include/header.jsp"/>
 
 <section>
-    <div class="bg-beige pt-5 pb-5">
+    <div class="bg-beige pt-5 pb-5 ">
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="m-0">User Registration</h1>
@@ -15,8 +15,28 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-5">
-                <!-- the action attribute on the form tag is the URL that the form will submit to when then user clicks the submit button -->
-                <form method="get" action="/auth/registerSubmit" style="width:auto; height: 840px; border: 10px solid black">
+                <form method="get" action="/auth/registerSubmit" style="width: auto; height: auto; border: 20px solid grey; background-color: rgb(248, 243, 243);">
+
+                    <div class="mt-3 col-12">
+                        <label for="userType" class="form-label">User Type</label>
+                        <select class="form-control" id="userType" name="userType">
+                            <option value="ADMIN">Admin</option>
+                            <option value="USER">User</option>
+                        </select>
+                    </div>
+                    <div class="bg-light1 pt-5 pb-5 class="col-6 px-5 text-center"">
+                      <div class="row">
+                              <div class="col-12 px-5">
+                                  <label for="departmentId" class="col-form-label">Select Department from the List</label>
+                                  <select class="form-control" id="departmentId" name="departmentId">
+                                      <option value="" <c:if test="${empty form.departmentId}">selected</c:if>>Please select a department</option>
+                                      <c:forEach var="department" items="${departments}">
+                                          <option value="${department.id}" <c:if test="${department.id == form.departmentId}">selected</c:if>>${department.departmentName}</option>
+                                      </c:forEach>
+                                  </select>
+                              </div>
+                         </div>
+                   </div>
                     <div class="mt-5 col-12">
                         <label for="firstName" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="firstName" name="firstName" value="${form.firstName}" aria-describedby="firstNameHelp">
@@ -106,7 +126,7 @@
                     </c:if>
 
 
-                    <button type="submit" class="btn btn-primary mt-3 ml-4 col-3">Submit</button>
+                    <button type="submit" class="btn btn-primary mt-3 mb-3 ml-4 col-3">Submit</button>
                 </form>
             </div>
         </div>

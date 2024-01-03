@@ -43,11 +43,11 @@
                         <table class="table table-hover">
                             <tr>
                                 <td>Id</td>
+                                <td>Image</td>
                                 <td>Training Name</td>
                                 <td>Date Posted</td>
                                 <td>Description</td>
                                 <td>Prerequisite</td>
-                                <td>Image</td>
                                 <td>Edit</td>
                                 <td>Detail</td>
                                 <td>Upload</td>
@@ -55,11 +55,11 @@
                             <c:forEach items="${trainingVar}" var="training">
                                 <tr>
                                     <td>${training.id}</td>
+                                    <td><img src="${training.imageUrl}" style="width:60px; height: 60px"></td>
                                     <td>${training.trainingName}</td>
                                     <td>${training.datePosted}</td>
                                     <td>${training.description}</td>
                                     <td>${training.prerequisite}</td>
-                                    <td><img src="${training.imageUrl}" style="width:30px; height: 30px"></td>
                                     <td>
                                         <a href="/training/edit/${training.id}">Edit</a>
                                     </td>

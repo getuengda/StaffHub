@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
 @Slf4j
 @Configuration
 @EnableWebSecurity
@@ -28,6 +29,7 @@ public class SecurityConfig {
         // this block of code determines which requests are authenticated
         http.authorizeRequests()
                 .requestMatchers(
+                        new AntPathRequestMatcher("/customer/**"),
                         new AntPathRequestMatcher("/admin/**"),
                         new AntPathRequestMatcher("/user/**")).authenticated()
                 .anyRequest().permitAll();

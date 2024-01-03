@@ -36,6 +36,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
@@ -111,18 +112,24 @@ public class UserController {
     }
 
     @GetMapping("/staff/myUser")
-    public void myStaff() {
+    public ModelAndView myStaff() {
         ModelAndView response = new ModelAndView("staff/create");
         log.info("######### In my staff ##############");
 
-        //Use the authenticated user service to find the logged-in user
+        // Use the authenticated user service to find the logged-in user
         User user = authenticatedUserService.loadCurrentUser();
 
-        List<User> users = (List<User>) userDao.findById(user.getId());
+        // Find the user in the database
+        Optional<User> optionalUser = Optional.ofNullable(userDao.findById(user.getId()));
 
-        for ( User user1 : users ) {
-            log.debug("user: id = " + user1.getId() + " last name = " + user1.getLastName());
+        if (optionalUser.isPresent()) {
+            User userFromDb = optionalUser.get();
+            log.debug("user: id = " + userFromDb.getId() + " last name = " + userFromDb.getLastName());
+        } else {
+            log.debug("User not found in the database");
         }
+
+        return response;
     }
 
     @GetMapping("/staff/edit/{userId}")

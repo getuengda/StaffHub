@@ -6,12 +6,15 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.perscholas.casestudy_staffhub.database.entity.Department;
 
 import java.util.Date;
 
 @Getter
 @Setter
 public class RegisterUserFormBean {
+
+    private Integer id;
 
     @NotEmpty(message="First Name is required.")
     @Length(max= 45, message = "First Name must be less than 45 characters.")
@@ -42,5 +45,15 @@ public class RegisterUserFormBean {
     private String address;
 
     private Date createDate;
+
+    private String userType;
+
+    private Integer userId;
+
+    private String roleName;
+
+    private Integer departmentId;
+
+    private Department department;
 
 }

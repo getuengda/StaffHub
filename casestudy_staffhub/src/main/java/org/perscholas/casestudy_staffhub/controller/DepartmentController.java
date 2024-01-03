@@ -6,7 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.perscholas.casestudy_staffhub.database.dao.DepartmentDAO;
 import org.perscholas.casestudy_staffhub.database.entity.Department;
+import org.perscholas.casestudy_staffhub.database.entity.User;
 import org.perscholas.casestudy_staffhub.formbean.DepartmentFormBean;
+import org.perscholas.casestudy_staffhub.security.AuthenticatedUserService;
 import org.perscholas.casestudy_staffhub.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +50,7 @@ public class DepartmentController {
     @GetMapping("/department/createSubmit")
     public ModelAndView createDepartment(@Valid @ModelAttribute DepartmentFormBean form, BindingResult bindingResult ) {
         if(bindingResult.hasErrors()){
-            log.info("########## In create employee submit");
+            log.info("########## In create user submit");
             ModelAndView response = new ModelAndView("department/create");
 
             for(ObjectError error : bindingResult.getAllErrors()){

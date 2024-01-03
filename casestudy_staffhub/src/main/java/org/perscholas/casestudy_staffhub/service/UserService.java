@@ -2,14 +2,8 @@ package org.perscholas.casestudy_staffhub.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
-import org.perscholas.casestudy_staffhub.database.dao.DepartmentDAO;
-import org.perscholas.casestudy_staffhub.database.dao.TrainingDAO;
-import org.perscholas.casestudy_staffhub.database.dao.UserDAO;
-import org.perscholas.casestudy_staffhub.database.dao.UserTrainingDAO;
-import org.perscholas.casestudy_staffhub.database.entity.Department;
-import org.perscholas.casestudy_staffhub.database.entity.Training;
-import org.perscholas.casestudy_staffhub.database.entity.User;
-import org.perscholas.casestudy_staffhub.database.entity.UserTraining;
+import org.perscholas.casestudy_staffhub.database.dao.*;
+import org.perscholas.casestudy_staffhub.database.entity.*;
 import org.perscholas.casestudy_staffhub.formbean.RegisterUserFormBean;
 import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
 
@@ -35,6 +29,9 @@ public class UserService {
     UserDAO userDao;
 
     @Autowired
+    UserRoleDAO userRoleDao;
+
+    @Autowired
     private DepartmentDAO departmentDao;
 
     @Autowired
@@ -55,19 +52,49 @@ public class UserService {
 
         user.setEmail(form.getEmail());
 
+        User userDpt = userDao.findById(form.getId());
+
+        //Add departments to the model
+        List<Department> departments = departmentService.getAllDepartments();
+
+        Department department = null;
+        Integer formId = form.getDepartmentId();
+
+        for(Department dept : departments){
+            if(dept.getId().equals(formId)){
+                department = dept;
+                break;
+            }
+        }
+
+        if(department != null){
+            department.getId();
+        }else {
+            log.info("Department not found");
+        }
+
+        user.setDepartment(department);
         String encoded = passwordEncoder.encode(form.getPassword());
         log.debug("Encoded password: " + encoded);
         user.setPassword(encoded);
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
-        // this will create a date in  the database with the current time (right now)
         user.setJobTitle(form.getJobTitle());
         user.setAddress(form.getAddress());
         user.setOffice_Id(form.getOffice_Id());
         user.setImageUrl(form.getImageUrl());
         user.setCreateDate(new Date());
+        user.setUserType(form.getUserType());
 
-        return userDao.save(user);
+        User savedUser = userDao.save(user);
+
+        UserRole userRole = new UserRole();
+        userRole.setUserId(savedUser.getId());
+        userRole.setRoleName(form.getUserType());
+
+        userRoleDao.save(userRole);
+
+        return savedUser;
     }
 
     public User createUser(UserFormBean form) {
@@ -120,6 +147,7 @@ public class UserService {
         user.setOffice_Id(form.getOffice_Id());
         user.setCreateDate(new Date());
         user.setImageUrl(form.getImageUrl());
+        user.setUserType(form.getUserType());
 
         return userDao.save(user);
     }
@@ -175,6 +203,7 @@ public class UserService {
 
 
         List<UserTraining> userTrainings = userTrainingDao.findByUserId(user.getId());
+
         List<UserTrainingFormBean> userTrainingBeans = new ArrayList<>();
         for (UserTraining userTraining : userTrainings) {
             UserTrainingFormBean userTrainingBean = populateTrainingDetails(userTraining);
@@ -182,7 +211,6 @@ public class UserService {
         }
 
         userProfileDTO.setUserTrainings(userTrainingBeans);
-
 
         return userProfileDTO;
     }
