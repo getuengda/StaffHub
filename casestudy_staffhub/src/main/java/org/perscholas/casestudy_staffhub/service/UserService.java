@@ -149,7 +149,15 @@ public class UserService {
         user.setImageUrl(form.getImageUrl());
         user.setUserType(form.getUserType());
 
-        return userDao.save(user);
+        User savedUser = userDao.save(user);
+
+        UserRole userRole = new UserRole();
+        userRole.setUserId(savedUser.getId());
+        userRole.setRoleName(form.getUserType());
+
+        userRoleDao.save(userRole);
+
+        return savedUser;
     }
 
     public List<User> getAllUsers(){
