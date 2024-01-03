@@ -5,14 +5,8 @@ import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.perscholas.casestudy_staffhub.database.dao.DepartmentDAO;
-import org.perscholas.casestudy_staffhub.database.dao.TrainingDAO;
-import org.perscholas.casestudy_staffhub.database.dao.UserDAO;
-import org.perscholas.casestudy_staffhub.database.dao.UserTrainingDAO;
-import org.perscholas.casestudy_staffhub.database.entity.Department;
-import org.perscholas.casestudy_staffhub.database.entity.Training;
-import org.perscholas.casestudy_staffhub.database.entity.User;
-import org.perscholas.casestudy_staffhub.database.entity.UserTraining;
+import org.perscholas.casestudy_staffhub.database.dao.*;
+import org.perscholas.casestudy_staffhub.database.entity.*;
 import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
 import org.perscholas.casestudy_staffhub.formbean.UserProfileDTO;
 import org.perscholas.casestudy_staffhub.security.AuthenticatedUserService;
@@ -64,6 +58,9 @@ public class UserController {
     @Autowired
     AuthenticatedUserService authenticatedUserService;
 
+    @Autowired
+    UserRoleDAO userRoleDao;
+
 
     @GetMapping("/staff/create")
     public ModelAndView createUser(){
@@ -104,6 +101,11 @@ public class UserController {
         Department department = departmentDao.findById(form.getDepartmentId());
 
         User u = userService.createUser(form);
+
+        UserRole userRole = new UserRole();
+        userRole.setUserId(u.getId());
+        userRole.setRoleName(form.getUserType());
+        userRoleDao.save(userRole);
 
         ModelAndView response = new ModelAndView();
         response.setViewName("redirect:/staff/edit/" + u.getId() + "?success=Staff Saved Successfully");
@@ -324,6 +326,36 @@ public class UserController {
             log.debug("user: id= " + user.getId() + "first name = " + user.getFirstName());
             log.debug("user: id= " + user.getId() + "last name = " + user.getLastName());
         }
+
+        return response;
+    }
+
+    @GetMapping("/staff/showUser")
+    public ModelAndView singleStaff(@RequestParam(required = false) Integer id) {
+        ModelAndView response = new ModelAndView("staff/showUser");
+        log.debug("In the user showSingleStaff controller method firstName");
+
+        // Fetch single user by id
+        User user = authenticatedUserService.loadCurrentUser();
+
+        // Find the user in the database
+        Optional<User> optionalUser = Optional.ofNullable(userDao.findById(user.getId()));
+
+        if (user != null) {
+            response.addObject("user", user);
+        } else {
+            log.warn("User with id " + id + " not found");
+        }
+
+        return response;
+    }
+
+    @GetMapping("/staff/{userId}/showUser")
+    public ModelAndView showSingleUser(@PathVariable Integer userId) {
+        ModelAndView response = new ModelAndView("staff/showUser");
+
+        User user = userDao.findById(userId);
+        response.addObject("user", user);
 
         return response;
     }

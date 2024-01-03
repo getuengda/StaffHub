@@ -1,7 +1,9 @@
 package org.perscholas.casestudy_staffhub.database.dao;
 
+import jakarta.transaction.Transactional;
 import org.perscholas.casestudy_staffhub.database.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.stereotype.Repository;
@@ -18,4 +20,8 @@ public interface UserDAO extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.firstName LIKE :firstName or u.lastName LIKE :lastName")
     List<User> findUserByFirstNameOrLastName(String firstName, String lastName);
+
+    @Modifying
+    @Transactional
+    int deleteByFirstName(String lastName);
 }
