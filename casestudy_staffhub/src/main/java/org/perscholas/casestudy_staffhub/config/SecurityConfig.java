@@ -29,7 +29,9 @@ public class SecurityConfig {
         // this block of code determines which requests are authenticated
         http.authorizeRequests()
                 .requestMatchers(
-                        new AntPathRequestMatcher("/customer/**"),
+                        new AntPathRequestMatcher("/department/**"),
+                        new AntPathRequestMatcher("/training/**"),
+                        new AntPathRequestMatcher("/staff/**"),
                         new AntPathRequestMatcher("/admin/**"),
                         new AntPathRequestMatcher("/user/**")).authenticated()
                 .anyRequest().permitAll();
