@@ -277,7 +277,7 @@ public class UserController {
                                     @RequestParam String status,
                                     RedirectAttributes redirectAttributes) throws ParseException {
         ModelAndView response = new ModelAndView("staff/addTraining");
-        log.debug("Adding training for userId: " + userId);
+        log.debug("Adding trainings for userId: " + userId);
 
         User user = userDao.findById(userId);
         Training training = trainingDao.findById(trainingId);
@@ -331,20 +331,18 @@ public class UserController {
     }
 
     @GetMapping("/staff/showUser")
-    public ModelAndView singleStaff(@RequestParam(required = false) Integer id) {
+    public ModelAndView singleStaff() {
         ModelAndView response = new ModelAndView("staff/showUser");
         log.debug("In the user showSingleStaff controller method firstName");
 
         // Fetch single user by id
         User user = authenticatedUserService.loadCurrentUser();
 
-        // Find the user in the database
-        Optional<User> optionalUser = Optional.ofNullable(userDao.findById(user.getId()));
-
         if (user != null) {
+            response.addObject("userId", user.getId());
             response.addObject("user", user);
         } else {
-            log.warn("User with id " + id + " not found");
+            log.warn("User not found");
         }
 
         return response;
@@ -355,7 +353,11 @@ public class UserController {
         ModelAndView response = new ModelAndView("staff/showUser");
 
         User user = userDao.findById(userId);
-        response.addObject("user", user);
+        if (user != null) {
+            response.addObject("user", user);
+        } else {
+            log.warn("User with id " + userId + " not found");
+        }
 
         return response;
     }
