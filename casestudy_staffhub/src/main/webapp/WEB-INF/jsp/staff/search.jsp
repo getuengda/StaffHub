@@ -17,15 +17,15 @@
 
             <div class="row justify-content-center">
                    <div class="col-3 col-sm-3 col-md-2 col-lg-2 text-end">
-                       <label for="firstName" class="form-label m-0 pt-1">First Name</label>
+                       <label for="firstName" class="form-label m-0 pt-1" style="color: black">First Name</label>
                     </div>
                     <div class="col-8 col-sm-9 col-md-6 col-lg-4">
                       <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Search by first name" value="${firstName}"/>
                    </div>
-             </div>
+             </div><br>
              <div class="row justify-content-center">
                     <div class="col-3 col-sm-3 col-md-2 col-lg-2 text-end">
-                         <label for="lastName" class="form-label m-0 pt-1">Last Name</label>
+                         <label for="lastName" class="form-label m-0 pt-1" style="color: black">Last Name</label>
                     </div>
                     <div class="col-8 col-sm-9 col-md-6 col-lg-4">
                         <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Search by last name" value="${lastName}"/>
@@ -43,7 +43,7 @@
 </section>
 
     <c:if test="${not empty userVar}">
-              <section class="bg-beige pb-5">
+              <section class="bg-light2 pb-5">
                     <div class="container">
                           <div class="row justify-content-center">
                                 <div class="col-12">
@@ -58,6 +58,7 @@
                                 <td>Job Title</td>
                                 <td>Office ID</td>
                                 <td>Address</td>
+                                <td>Image</td>
                                 <td>Edit</td>
                                 <td>Profile</td>
                                 <td>Detail</td>
@@ -72,6 +73,7 @@
                                     <td>${user.jobTitle}</td>
                                     <td>${user.office_Id}</td>
                                     <td>${user.address}</td>
+                                    <td><img src="${user.imageUrl}" alt="User Image" style="width:30px; height: 30px"></td>
                                     <td>
                                         <a href="/staff/edit/${user.id}">Edit</a>
                                     </td>

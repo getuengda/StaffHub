@@ -30,6 +30,13 @@
             <input type="hidden" name="id" value="${form.id}">
               <div class="bg-light1 pt-5 pb-5 class="col-6 px-5 text-center"">
                   <div class="row">
+                           <div class="col-12 px-5">
+                              <label for="userType" class="form-label">User Type</label>
+                              <select class="form-control" id="userType" name="userType">
+                                  <option value="USER">User</option>
+                                  <option value="ADMIN">Admin</option>
+                              </select>
+                          </div>
                           <div class="col-12 px-5">
                               <label for="departmentId" class="col-form-label">Select Department from the List</label>
                               <select class="form-control" id="departmentId" name="departmentId">

@@ -11,13 +11,13 @@
     </div>
 </section>
 
-<section class="bg-light1 pt-5 pb-5">
+<section class="bg-light2 pt-5 pb-5">
     <div class="container">
         <form action="/training/search">
 
             <div class="row justify-content-center">
                    <div class="col-3 col-sm-3 col-md-2 col-lg-2 text-end">
-                       <label for="trainingName" class="form-label m-0 pt-1">Training Name</label>
+                       <label for="trainingName" class="form-label bg-light2 m-0 pt-1" style="color: black">Training Name</label>
                     </div>
                     <div class="col-8 col-sm-9 col-md-6 col-lg-4">
                       <input type="text" class="form-control" id="trainingName" name="trainingName" placeholder="Search by training name" value="${trainingName}"/>
