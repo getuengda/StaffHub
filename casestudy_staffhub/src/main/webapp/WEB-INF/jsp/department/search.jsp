@@ -17,7 +17,7 @@
 
             <div class="row justify-content-center">
                    <div class="col-3 col-sm-3 col-md-2 col-lg-2 text-end">
-                       <label for="departmentName" class="form-label m-0 pt-1">Department Name</label>
+                       <label for="departmentName" class="form-label m-0 pt-1" style="color: black">Department Name</label>
                     </div>
                     <div class="col-8 col-sm-9 col-md-6 col-lg-4">
                       <input type="text" class="form-control" id="departmentName" name="departmentName" placeholder="Search by department name" value="${departmentName}"/>
@@ -34,7 +34,7 @@
 </section>
 
     <c:if test="${not empty departmentVar}">
-              <section class="bg-light1 pb-5">
+              <section class="bg-light2 pb-5">
                     <div class="container">
                           <div class="row justify-content-center">
                                 <div class="col-12">

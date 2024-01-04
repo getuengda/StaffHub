@@ -2,6 +2,8 @@ body{
         background-image: url("../images/staff_mgmt3.jpg");
         background-size: cover;
         z-index: -100;
+        color: white;
+
  }
 
 .m-0 {
@@ -17,7 +19,7 @@ body{
 }
 
 .header-bg-color2 {
-    background-color:#DBC4F0;
+    background-color: #005030;
 }
 
 .bg-lighter {
@@ -33,7 +35,7 @@ body{
 }
 
 .bg-beige {
-    background-color: #343a40;
+    background-color: #005030;
 }
 
 .footer-bg-color {
@@ -50,7 +52,7 @@ body{
 
 /* Navigation styles */
 .navbar {
-    background-color: #343a40;
+    background-color: #005030;
 }
 
 
@@ -63,8 +65,8 @@ body{
 .navbar-nav .nav-link {
     color: white;
     font-weight: bold;
-}
 
+}
 
 .navbar-nav .dropdown-menu {
     background-color: #343a40;
@@ -106,6 +108,7 @@ body{
     max-width: 100px;
     height: auto;
 }
+
 
 @media (max-width: 992px) {
     .navbar-brand {

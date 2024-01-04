@@ -20,8 +20,8 @@
                     <div class="mt-3 col-12">
                         <label for="userType" class="form-label">User Type</label>
                         <select class="form-control" id="userType" name="userType">
-                            <option value="ADMIN">Admin</option>
                             <option value="USER">User</option>
+                            <option value="ADMIN">Admin</option>
                         </select>
                     </div>
                     <div class="bg-light1 pt-5 pb-5 class="col-6 px-5 text-center"">

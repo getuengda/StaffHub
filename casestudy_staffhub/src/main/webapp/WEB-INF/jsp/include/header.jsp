@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,6 +15,7 @@
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
@@ -24,7 +25,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg header-bg-color2">
+<nav class="navbar navbar-expand-lg bg-beige">
     <div class="container-fluid">
         <a class="navbar-brand mb-3 mt-0" href="#">
             <img class="img-responsive logo" src="/pub/images/GT-logo.jpg" alt="Logo">
@@ -34,73 +35,96 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/staff/create">Create Staff</a>
-                            <a class="dropdown-item" href="/staff/search">Search Staff</a>
-                            <a class="dropdown-item" href="/staff/profile">User Profile</a>
-                            <a class="dropdown-item" href="/staff/showAll">Show All Staffs</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Department</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/department/create">Create Department</a>
-                            <a class="dropdown-item" href="/department/search">Search Department</a>
-                            <a class="dropdown-item" href="/department/showAll">Show All Departments</a>
-                            <a class="dropdown-item" href="/department/find">Find Department By ID</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                    </li>
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Training</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/training/create">Create Training</a>
-                            <a class="dropdown-item" href="/training/search">Search Training</a>
-                            <a class="dropdown-item" href="/training/showAll">Show All Trainings</a>
-                            <a class="dropdown-item" href="/training/find">Find Training By postedDate</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                    </li>
-                    <sec:authorize access="!isAuthenticated()">
-                       <li class="nav-item dropdown mt-2">
-                       <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">User Login/Registration</a>
-                       <div class="dropdown-menu">
-                           <a class="dropdown-item" href="/auth/register">User Registration</a>
-                           <a class="dropdown-item" href="/auth/login">Login</a>
-                           <div class="dropdown-divider"></div>
-                       </div>
-                       </li>
-                   </sec:authorize>
-                   <sec:authorize access="hasAnyAuthority('ADMIN')">
-                       <li class="nav-item mt-2">
-                           <a class="nav-link" href="">Admin</a>
-                       </li>
-                   </sec:authorize>
-                   <sec:authorize access="isAuthenticated()">
-                       <li class="nav-item mt-2">
-                           <a class="nav-link" href="/auth/logout">Logout</a>
-                       </li>
-                       <li class="nav-item mt-2">
-                           <a class="nav-link" href=""><sec:authentication property="principal.username" /></a>
-                       </li>
-                   </sec:authorize>
-                    <li class="nav-item mt-1">
-                          <a class="nav-link" href="/admin/index">Secured Request</a>
-                   </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+               <li class="nav-item">
+                  <a class="nav-link" style="font-size: 16px" href="">Home</a>
+              </li>
+            <!-- ==================ADMIN===================== -->
+             <sec:authorize access="hasAuthority('ADMIN')">
+             <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
+               <div class="dropdown-menu">
+                   <a class="dropdown-item" href="/staff/create">Create Staff</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item" href="/staff/search">Search Staff</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item" href="/staff/showUser">Show a Staff</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item" href="/staff/showAll">Show All Staffs</a>
+               </div>
+             </li>
+             <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Department</a>
+               <div class="dropdown-menu">
+                   <a class="dropdown-item" href="/department/create">Create Department</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item" href="/department/search">Search Department</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item" href="/department/showAll">Show All Departments</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item" href="/department/find">Find Department By ID</a>
+               </div>
+             </li>
+             <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Training</a>
+               <div class="dropdown-menu">
+                   <a class="dropdown-item" href="/training/create">Create Training</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item" href="/training/search">Search Training</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item" href="/training/showAll">Show All Trainings</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item" href="/training/find">Find Training By postedDate</a>
+               </div>
+             </li>
 
-    <!-- JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+         </sec:authorize>
+         <!-- ==================USER===================== -->
+         <sec:authorize access="hasAuthority('USER') and !hasAuthority('ADMIN')">
+              <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/staff/showUser">Show a Staff</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/staff/showAll">Show All Staffs</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Department</a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/department/search">Search Department</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/department/showAll">Show All Departments</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Training</a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/training/search">Search Training</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/training/showAll">Show All Trainings</a>
+              </div>
+            </li>
+
+         </sec:authorize>
+         <!-- ===================NOT LOGGED IN========================= -->
+         <sec:authorize access="!isAuthenticated()">
+             <li class="nav-item">
+                 <a class="nav-link" href="/auth/register" style="color: #fd0dc4; font-size: 16px">Sign Up</a>
+             </li>
+             <li class = "nav-item">
+                 <a class = "nav-link" href="/auth/login" style="color: #fd0dc4; font-size: 16px">Sign In</a>
+             </li>
+          </sec:authorize>
+          <!-- ============================================== -->
+           <sec:authorize access="isAuthenticated()">
+               <li class="nav-item">
+                   <a class="nav-link" style="color: #fd0dc4; font-size: 16px" href="/auth/logout">Logout</a>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" style="color: #fd0dc4;" href=""><sec:authentication property="principal.username" /></a>
+               </li>
+           </sec:authorize>
+          </ul>
+        </div>
+    </div>
+</nav>
