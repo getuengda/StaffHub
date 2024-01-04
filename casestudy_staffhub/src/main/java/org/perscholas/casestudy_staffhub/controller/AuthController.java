@@ -33,7 +33,7 @@ public class AuthController {
     private UserDAO userDao;
 
     @Autowired
-    UserRoleDAO userRoleDao;
+    private UserRoleDAO userRoleDao;
 
     @Autowired
     private DepartmentService departmentService;

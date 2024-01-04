@@ -27,13 +27,13 @@ import java.util.List;
 public class TrainingController {
 
     @Autowired
-    TrainingService trainingService;
+    private TrainingService trainingService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    TrainingDAO trainingDao;
+    private TrainingDAO trainingDao;
 
     @GetMapping("/training/create")
     public ModelAndView createTraining() {

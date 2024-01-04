@@ -331,20 +331,18 @@ public class UserController {
     }
 
     @GetMapping("/staff/showUser")
-    public ModelAndView singleStaff(@RequestParam(required = false) Integer id) {
+    public ModelAndView singleStaff() {
         ModelAndView response = new ModelAndView("staff/showUser");
         log.debug("In the user showSingleStaff controller method firstName");
 
-        // Fetch single user by id
+        // Fetch current user logged
         User user = authenticatedUserService.loadCurrentUser();
 
-        // Find the user in the database
-        Optional<User> optionalUser = Optional.ofNullable(userDao.findById(user.getId()));
-
         if (user != null) {
+            response.addObject("userId", user.getId());
             response.addObject("user", user);
-        } else {
-            log.warn("User with id " + id + " not found");
+        }  else {
+            log.warn("User not found");
         }
 
         return response;
