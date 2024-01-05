@@ -1,7 +1,9 @@
 package org.perscholas.casestudy_staffhub.database.dao;
 
+import jakarta.transaction.Transactional;
 import org.perscholas.casestudy_staffhub.database.entity.Training;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +21,8 @@ public interface TrainingDAO extends JpaRepository<Training, Long> {
 
     @Query("SELECT t FROM Training t WHERE t.trainingName LIKE :trainingName")
     List<Training> findTrainingByName(String trainingName);
+
+    @Modifying
+    @Transactional
+    int deleteByTrainingName(String trainingName);
 }

@@ -34,36 +34,38 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs ml-auto">
                <li class="nav-item">
                   <a class="nav-link" style="font-size: 16px" href="">Home</a>
               </li>
             <!-- ==================ADMIN===================== -->
              <sec:authorize access="hasAuthority('ADMIN')">
+             <!-- ==================TEST DEPT FROM ADMIN CONTROLLER===================== -->
              <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
-               <div class="dropdown-menu">
-                   <a class="dropdown-item" href="/staff/create">Create Staff</a>
-                   <div class="dropdown-divider"></div>
-                   <a class="dropdown-item" href="/staff/search">Search Staff</a>
-                   <div class="dropdown-divider"></div>
-                   <a class="dropdown-item" href="/staff/showUser">Show a Staff</a>
-                   <div class="dropdown-divider"></div>
-                   <a class="dropdown-item" href="/staff/showAll">Show All Staffs</a>
-               </div>
-             </li>
+                <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/admin/createUser">Create Staff</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/searchUser">Search Staff</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/showLoggedUser">Show a Staff</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/showAllUser">Show All Staffs</a>
+                </div>
+              </li>
              <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Department</a>
-               <div class="dropdown-menu">
-                   <a class="dropdown-item" href="/department/create">Create Department</a>
-                   <div class="dropdown-divider"></div>
-                   <a class="dropdown-item" href="/department/search">Search Department</a>
-                   <div class="dropdown-divider"></div>
-                   <a class="dropdown-item" href="/department/showAll">Show All Departments</a>
-                   <div class="dropdown-divider"></div>
-                   <a class="dropdown-item" href="/department/find">Find Department By ID</a>
-               </div>
-             </li>
+                <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Department</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/admin/createDepartment">Create Department</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/searchDepartment">Search Department</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/showAllDepartment">Show All Departments</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/findDepartment">Find Department By ID</a>
+                </div>
+              </li>
+             <!-- ==================ABOVE TEST DEPT FROM ADMIN CONTROLLER===================== -->
              <li class="nav-item dropdown">
                <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Training</a>
                <div class="dropdown-menu">
@@ -79,7 +81,8 @@
 
          </sec:authorize>
          <!-- ==================USER===================== -->
-         <sec:authorize access="hasAuthority('USER') and !hasAuthority('ADMIN')">
+         <sec:authorize access="hasAuthority('USER')">
+            <sec:authorize access="!hasAuthority('ADMIN')">
               <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
               <div class="dropdown-menu">
@@ -104,7 +107,7 @@
                   <a class="dropdown-item" href="/training/showAll">Show All Trainings</a>
               </div>
             </li>
-
+             </sec:authorize>
          </sec:authorize>
          <!-- ===================NOT LOGGED IN========================= -->
          <sec:authorize access="!isAuthenticated()">
