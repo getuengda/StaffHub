@@ -29,11 +29,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.debug("User login attempt with username: " + username);
 
-        // look up the incoming username in the database
+        // lookup the incoming username in the database
         User user = userDao.findByEmailIgnoreCase(username);
-
-        userDao.findByEmailIgnoreCase(username);
 
         // if we did not find the user in the database then we throw an exception because the user is not valid
         if (user == null) {
@@ -50,9 +49,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // setup user roles
         Collection<? extends GrantedAuthority> springRoles = buildGrantAuthorities(userRoles);
 
+
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), accountIsEnabled,
                 accountNonExpired, credentialsNonExpired, accountNonLocked, springRoles);
-
     }
 
     public static Collection<? extends GrantedAuthority> buildGrantAuthorities(List<UserRole> userRoles) {
@@ -67,6 +66,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return authorities;
     }
-
 
 }
