@@ -78,7 +78,7 @@
                                         <a href="/staff/edit/${user.id}">Edit</a>
                                     </td>
                                     <td>
-                                        <a href="/staff/profile?id=${user.id}">Profile</a>
+                                        <a href="/staff/profile?id=${userProfile.id}">Profile</a>
                                     </td>
                                     <td>
                                         <a href="/staff/detail?id=${user.id}">Detail</a>

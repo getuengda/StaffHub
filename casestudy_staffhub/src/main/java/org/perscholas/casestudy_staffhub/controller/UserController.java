@@ -5,19 +5,22 @@ import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.perscholas.casestudy_staffhub.database.dao.*;
 import org.perscholas.casestudy_staffhub.database.entity.*;
 import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
 import org.perscholas.casestudy_staffhub.formbean.UserProfileDTO;
+import org.perscholas.casestudy_staffhub.formbean.UserTrainingFormBean;
 import org.perscholas.casestudy_staffhub.security.AuthenticatedUserService;
 import org.perscholas.casestudy_staffhub.service.DepartmentService;
 import org.perscholas.casestudy_staffhub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +31,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +65,24 @@ public class UserController {
     @Autowired
     UserRoleDAO userRoleDao;
 
+    // Added to resolve Unparseable date: "", when I'm editing userTraining information and submit dateCompletion empty
+    // because that might happen like status could be In Progress
+    // This method will be called before each request is processed by the controller’s handler methods
+//    @InitBinder
+//    public void allowEmptyDateBinding( WebDataBinder binder ) {
+//        //Custom Date Editor
+//        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd-MM-yyyy");
+//        simpleDateFormat.setLenient(false);
+//        binder.registerCustomEditor( Date.class, new CustomDateEditor( simpleDateFormat,true));
+//    }
+
+    private String modifyDateLayout(String inputDate) throws ParseException {
+        if (inputDate == null || inputDate.isEmpty()) {
+            return null;
+        }
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").parse(inputDate);
+        return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date);
+    }
 
     @GetMapping("/staff/create")
     public ModelAndView createUser(){
@@ -273,20 +295,26 @@ public class UserController {
     @PostMapping("/staff/{userId}/addTraining")
     public ModelAndView addTraining(@PathVariable Integer userId,
                                     @RequestParam Integer trainingId,
-                                    @RequestParam String enrollmentDate,
+                                    @RequestParam(required = false) String enrollmentDate,
+                                    @RequestParam(required = false) String completionDate,
                                     @RequestParam String status,
                                     RedirectAttributes redirectAttributes) throws ParseException {
         ModelAndView response = new ModelAndView("staff/addTraining");
-        log.debug("Adding trainings for userId: " + userId);
+        log.debug("Adding training for userId: " + userId);
 
         User user = userDao.findById(userId);
         Training training = trainingDao.findById(trainingId);
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = dateFormatter.parse(enrollmentDate);
+        String modifiedEnrollmentDate = modifyDateLayout(enrollmentDate);
+        String modifiedCompletionDate = modifyDateLayout(completionDate);
+
+        Date date = modifiedEnrollmentDate != null ? new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(modifiedEnrollmentDate) : null;
+        Date date1 = modifiedCompletionDate != null ? new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(modifiedCompletionDate) : null;
 
         UserTraining userTraining = new UserTraining();
+
         userTraining.setEnrollmentDate(date);
+        userTraining.setCompletionDate(date1);
         userTraining.setUser(user);
         userTraining.setTraining(training);
         userTraining.setStatus(status);
@@ -298,7 +326,6 @@ public class UserController {
         return response;
     }
 
-
     @GetMapping("/staff/addTraining")
     public ModelAndView showAddTrainingForm(@RequestParam Integer userId) {
         ModelAndView response = new ModelAndView("staff/addTraining");
@@ -306,6 +333,57 @@ public class UserController {
         List<Training> trainingList = trainingDao.findAll();
 
         response.addObject("userId", userId);
+        response.addObject("trainingList", trainingList);
+
+        return response;
+    }
+
+    @PostMapping("/staff/{userId}/editTraining/{trainingId}")
+    public ModelAndView editTraining(@PathVariable Integer userId,
+                                     @PathVariable Integer trainingId,
+                                     @RequestParam(required = false) String enrollmentDate,
+                                     @RequestParam(required = false) String completionDate,
+                                     @RequestParam String status,
+                                     RedirectAttributes redirectAttributes) throws ParseException {
+        ModelAndView response = new ModelAndView("staff/editTraining");
+        log.debug("Editing training for userId: " + userId);
+
+        // Fetch single user by id
+        User user = authenticatedUserService.loadCurrentUser();
+        //User user = userDao.findById(userId);
+        userId = user.getId();
+        Training training = trainingDao.findById(trainingId);
+
+        String modifiedEnrollmentDate = modifyDateLayout(enrollmentDate);
+        String modifiedCompletionDate = modifyDateLayout(completionDate);
+
+        Date date = modifiedEnrollmentDate != null ? new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(modifiedEnrollmentDate) : null;
+        Date date1 = modifiedCompletionDate != null ? new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(modifiedCompletionDate) : null;
+
+        UserTraining userTraining = userTrainingDao.findByUserIdAndTrainingId(userId, trainingId);
+        userTraining.setEnrollmentDate(date);
+        userTraining.setCompletionDate(date1);
+        userTraining.setUser(user);
+        userTraining.setTraining(training);
+        userTraining.setStatus(status);
+        userTrainingDao.save(userTraining);
+
+        response.addObject("user", user);
+        response.setViewName("redirect:/staff/" + userId + "/profile");
+
+        return response;
+    }
+
+    @GetMapping("/staff/{userId}/editTraining/{trainingId}")
+    public ModelAndView showEditTrainingForm(@PathVariable Integer userId, @PathVariable Integer trainingId) {
+        ModelAndView response = new ModelAndView("staff/editTraining");
+
+        UserTraining userTraining = userTrainingDao.findByUserIdAndTrainingId(userId, trainingId);
+        List<Training> trainingList = trainingDao.findAll();
+
+        response.addObject("userId", userId);
+        response.addObject("trainingId", trainingId);
+        response.addObject("userTraining", userTraining);
         response.addObject("trainingList", trainingList);
 
         return response;
@@ -330,66 +408,135 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/staff/showUser")
-    public ModelAndView singleStaff() {
+    @RequestMapping(value = "/staff/showUser", method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView singleStaff(@RequestParam(required = false) Integer id) {
         ModelAndView response = new ModelAndView("staff/showUser");
         log.debug("In the user showSingleStaff controller method firstName");
 
         // Fetch single user by id
         User user = authenticatedUserService.loadCurrentUser();
 
+        // Find the user in the database
+        Optional<User> optionalUser = Optional.ofNullable(userDao.findById(user.getId()));
+
         if (user != null) {
-            response.addObject("userId", user.getId());
             response.addObject("user", user);
         } else {
-            log.warn("User not found");
+            log.warn("User with id " + id + " not found");
         }
 
         return response;
     }
 
-    @GetMapping("/staff/{userId}/showUser")
+    @RequestMapping(value = "/staff/{userId}/showUser", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView showSingleUser(@PathVariable Integer userId) {
         ModelAndView response = new ModelAndView("staff/showUser");
 
         User user = userDao.findById(userId);
-        if (user != null) {
-            response.addObject("user", user);
-        } else {
-            log.warn("User with id " + userId + " not found");
-        }
+        response.addObject("user", user);
 
         return response;
     }
 
-    @GetMapping("/staff/{userId}/profile")
-    public String showUserProfile(@PathVariable Integer userId) {
 
+    @GetMapping("/staff/profile")
+    public ModelAndView userProfile(){
+        ModelAndView response = new ModelAndView("staff/profile");
+        log.debug("In the user staff profile controller method firstName");
+
+        // Fetch single user by id
+        User user = authenticatedUserService.loadCurrentUser();
+
+        UserProfileDTO userProfile = userService.getUserProfileById(user.getId());
+
+        if (userProfile == null) {
+            throw new ResourceNotFoundException("User not found with id " + user.getId());
+        } else{
+            response.addObject("userProfile", userProfile);
+            response.addObject("user", user);
+        }
+        return response;
+    }
+
+    @PostMapping("/staff/profileSubmit")
+    public String userProfileSubmit(@PathVariable Integer userId, RedirectAttributes redirectAttributes) {
+
+        UserProfileDTO userProfile = userService.getUserProfileById(userId);
+        if (userProfile == null) {
+            throw new ResourceNotFoundException("User not found with id " + userId);
+        }
+        redirectAttributes.addFlashAttribute("success", "Staff Saved Successfully");
+        return "redirect:/staff/profile/" + userId;
+    }
+
+
+    @PostMapping("/staff/editProfile/{userId}")
+    public ModelAndView editUserProfile(@PathVariable Integer userId, @RequestParam(required = false) String success) {
         ModelAndView response = new ModelAndView("staff/profile");
 
-        UserProfileDTO userProfile = userService.getUserProfileById(userId);
+        User user = userDao.findById(userId);
 
-        if (userProfile == null) {
-            return "redirect:/error";
+
+        if (!StringUtils.isEmpty(success)) {
+            response.addObject("success", success);
         }
 
-        response.addObject("userProfile", userProfile);
-        return String.valueOf(response);
-    }
+        UserProfileDTO userProfileDTO = new UserProfileDTO();
+        userProfileDTO.setId(user.getId());
+        userProfileDTO.setFirstName(user.getFirstName());
+        userProfileDTO.setLastName(user.getLastName());
+        userProfileDTO.setEmail(user.getEmail());
+        userProfileDTO.setJobTitle(user.getJobTitle());
+        userProfileDTO.setOffice_Id(user.getOffice_Id());
+        userProfileDTO.setAddress(user.getAddress());
+        userProfileDTO.setImageUrl(user.getImageUrl());
 
-    @GetMapping("staff/profile")
-    public String userProfile(@RequestParam("id") Integer userId, Model model) {
-        log.debug("In the user profile controller method id: " + userId);
-
-        UserProfileDTO userProfile = userService.getUserProfileById(userId);
-
-        if (userProfile == null) {
-            return "redirect:/error";
+        // Checking if user and department are not null before accessing their attributes
+        if (user.getDepartment() != null) {
+            populateDepartmentDetails(userProfileDTO, user.getDepartment());
+        } else {
+            setDefaultDepartmentValues(userProfileDTO);
         }
 
-        model.addAttribute("userProfile", userProfile);
 
-        return "staff/profile";
+        List<UserTraining> userTrainings = userTrainingDao.findByUserId(user.getId());
+
+        List<UserTrainingFormBean> userTrainingBeans = new ArrayList<>();
+        for (UserTraining userTraining : userTrainings) {
+            UserTrainingFormBean userTrainingBean = populateTrainingDetails(userTraining);
+            userTrainingBeans.add(userTrainingBean);
+        }
+
+        userProfileDTO.setUserTrainings(userTrainingBeans);
+
+        response.addObject("userProfile", userProfileDTO);
+        response.addObject("user", user);
+
+        return response;
     }
+
+    private void populateDepartmentDetails(UserProfileDTO userProfileDTO, Department department) {
+        userProfileDTO.setDepartmentId(department.getId());
+        userProfileDTO.setDepartmentName(department.getDepartmentName());
+        userProfileDTO.setDescription(department.getDescription());
+    }
+
+    private void setDefaultDepartmentValues(UserProfileDTO userProfileDTO) {
+        userProfileDTO.setDepartmentId(null);
+        userProfileDTO.setDepartmentName("N/A");
+        userProfileDTO.setDescription("N/A");
+    }
+
+    private UserTrainingFormBean populateTrainingDetails(UserTraining userTraining) {
+        UserTrainingFormBean userTrainingBean = new UserTrainingFormBean();
+        userTrainingBean.setId(userTraining.getId());
+        userTrainingBean.setUser(userTraining.getUser());
+        userTrainingBean.setTraining(userTraining.getTraining());
+        userTrainingBean.setEnrollmentDate(userTraining.getEnrollmentDate());
+        userTrainingBean.setCompletionDate(userTraining.getCompletionDate());
+        userTrainingBean.setStatus(userTraining.getStatus());
+        return userTrainingBean;
+    }
+
 
 }

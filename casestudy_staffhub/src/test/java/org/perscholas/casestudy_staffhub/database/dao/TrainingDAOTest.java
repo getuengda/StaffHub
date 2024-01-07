@@ -27,7 +27,7 @@ public class TrainingDAOTest {
 
         // given
         Training training = new Training();
-        training.setTrainingName("Java First");
+        training.setTrainingName("Java First12345");
         training.setDescription("Core Language");
         training.setPrerequisite("Interest and IT proficiency");
         training.setDatePosted(new Date());
@@ -38,7 +38,7 @@ public class TrainingDAOTest {
 
         // then
         Assertions.assertNotNull(training.getId());
-        Assertions.assertEquals("Java First", training.getTrainingName());
+        Assertions.assertEquals("Java First12345", training.getTrainingName());
         Assertions.assertEquals("Core Language", training.getDescription());
         Assertions.assertEquals("Interest and IT proficiency", training.getPrerequisite());
         Assertions.assertEquals("Interest and IT proficiency", training.getPrerequisite());
@@ -51,18 +51,16 @@ public class TrainingDAOTest {
     public void findByTrainingName(){
 
         // given
-        String trainingName = "Java First";
+        String trainingName = "Java First12345";
 
         // when
-        List<Training> trainings = trainingService.getAllTrainings();
-
+        List<Training> trainings = trainingDao.findTrainingByName(trainingName);
 
         // then
-        int lastIndex = trainings.size() - 1;
-        Training training = trainings.get(lastIndex);
+        Training training = trainings.get(0);
 
         Assertions.assertNotNull(training.getId());
-        Assertions.assertEquals("Java First", training.getTrainingName());
+        Assertions.assertEquals("Java First12345", training.getTrainingName());
         Assertions.assertEquals("Core Language", training.getDescription());
         Assertions.assertEquals("Interest and IT proficiency", training.getPrerequisite());
         Assertions.assertEquals("Interest and IT proficiency", training.getPrerequisite());
@@ -76,7 +74,7 @@ public class TrainingDAOTest {
     public void deleteTrainingTest(){
 
         // given
-        String trainingName = "Java First";
+        String trainingName = "Java First12345";
         List<Training> trainings = trainingDao.findTrainingByName(trainingName);
 
         // When
@@ -91,7 +89,7 @@ public class TrainingDAOTest {
     public void shouldNotExistTest(){
 
         // given
-        String trainingName = "Java First";
+        String trainingName = "Java First12345";
 
         // when
         List<Training> trainings = trainingDao.findTrainingByName(trainingName);

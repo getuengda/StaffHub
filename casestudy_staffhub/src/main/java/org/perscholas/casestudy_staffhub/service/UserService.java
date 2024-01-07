@@ -12,13 +12,11 @@ import org.perscholas.casestudy_staffhub.formbean.UserTrainingFormBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 
 
 @Slf4j
@@ -185,7 +183,7 @@ public class UserService {
     }
 
 
-        public UserProfileDTO getUserProfileById(Integer userId) {
+    public UserProfileDTO getUserProfileById(Integer userId) {
         User user = userDao.findById(userId);
 
         if (user == null) {
@@ -254,4 +252,5 @@ public class UserService {
         userTrainingBean.setCompletionDate(new Date("N/A"));
         userTrainingBean.setStatus("N/A");
     }
+
 }

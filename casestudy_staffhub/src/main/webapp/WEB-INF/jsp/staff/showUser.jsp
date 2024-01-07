@@ -11,7 +11,7 @@
     </div>
 </section>
 <div class="container">
-    <form action="/staff/showUser">
+    <form action="/staff/showUser" method = {RequestMethod.GET, RequestMethod.POST}>
         <c:if test="${not empty user}">
             <section class="bg-light1 pb-5">
                 <div class="container">
@@ -42,11 +42,11 @@
                                     <td>${user.jobTitle}</td>
                                     <td>${user.office_Id}</td>
                                     <td>${user.address}</td>
-                                    <td>
+                                     <td>
                                         <a href="/staff/edit/${user.id}">Edit</a>
                                     </td>
                                     <td>
-                                        <a href="/staff/profile?id=${user.id}">Profile</a>
+                                        <a href="/staff/profile?id=${userProfile.id}">Profile</a>
                                     </td>
                                     <td>
                                         <a href="/staff/detail?id=${user.id}">Detail</a>
@@ -63,8 +63,5 @@
         </c:if>
     </form>
 </div>
-
-
-
 
 <jsp:include page="../include/footer.jsp"/>

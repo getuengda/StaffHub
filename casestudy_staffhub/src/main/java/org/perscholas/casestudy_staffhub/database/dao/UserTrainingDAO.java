@@ -14,4 +14,7 @@ public interface UserTrainingDAO extends JpaRepository<UserTraining, Long> {
     @Query("select ut FROM UserTraining ut WHERE ut.user.id = :userId")
     List<UserTraining> findByUserId(Integer userId);
 
+    @Query("select ut FROM UserTraining ut WHERE ut.user.id = :userId AND ut.training.id= :trainingId")
+    UserTraining findByUserIdAndTrainingId(Integer userId, Integer trainingId);
+
 }

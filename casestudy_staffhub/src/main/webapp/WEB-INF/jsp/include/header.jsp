@@ -88,6 +88,8 @@
               <div class="dropdown-menu">
                   <a class="dropdown-item" href="/staff/showUser">Show a Staff</a>
                   <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/staff/profile">Show your Profile</a>
+                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="/staff/showAll">Show All Staffs</a>
               </div>
             </li>
