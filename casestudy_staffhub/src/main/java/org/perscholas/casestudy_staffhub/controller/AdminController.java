@@ -18,5 +18,4 @@ public class AdminController {
         response.setViewName("admin/index");
         return response;
     }
-    
 }

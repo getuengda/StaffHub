@@ -1,8 +1,11 @@
 package org.perscholas.casestudy_staffhub.database.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 
