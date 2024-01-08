@@ -19,13 +19,13 @@
                 <div class="row justify-content-center">
                     <div class="col-12">
                         <h3 class="text-center pb-3">Staff Personal Information</h3>
-                        <form:form modelAttribute="userProfile" method="post" action="/staff/editProfile/${userProfile.id}">
+                        <form:form modelAttribute="userProfile" method="post" action="/admin/editShowProfile/${userProfile.id}">
                             <table class="table table-hover">
                                 <tr class="bg-light2">
                                     <td>Id</td>
                                     <td>${userProfile.id}</td>
                                 </tr>
-                                  <tr>
+                                <tr>
                                    <td>First Name</td>
                                    <td><form:input path="firstName" value="${userProfile.firstName}" /></td>
                                </tr>
@@ -50,10 +50,11 @@
                                    <td><form:input path="jobTitle" value="${userProfile.jobTitle}" /></td>
                                </tr>
                                <tr>
-                                  <td colspan="2">
-                                      <a href="/staff/edit/${userProfile.id}" class="btn col-1 btn-primary">Edit</a>
-                                  </td>
-                              </tr>
+                               <tr>
+                                   <td colspan="2">
+                                       <a class="btn btn-primary" href="/admin/editUser/${user.id}">Edit</a>
+                                   </td>
+                               </tr>
                            </table>
                        </form:form>
 
@@ -70,7 +71,7 @@
                         </table>
 
                         <h3 class="text-center pb-3">Staff Training Information</h3>
-                        <form:form modelAttribute="userProfile" method="post" action="/staff/editProfile/${userProfile.id}">
+                        <form:form modelAttribute="userProfile" method="post" action="/admin/editProfile/${userProfile.id}">
                         <table class="table table-hover" style="margin-left: auto; padding-right: 5px">
                             <tr class="bg-light2">
                                 <td>ID</td>
@@ -79,7 +80,6 @@
                                 <td>Completion Date</td>
                                 <td>Status</td>
                                 <td>Edit</td>
-                                <td>Profile</td>
                             </tr>
                              <c:forEach items="${userProfile.userTrainings}" var="userTraining" varStatus="status">
                             <tr>
@@ -93,13 +93,16 @@
                                     <form:input path="userTrainings[${status.index}].status" id="status_${status.index}" value="${userTraining.status}" />
                                 </td>
                                 <td>
-                                    <a style="color: #fd0dc4;" href="/staff/${userProfile.id}/editTraining/${userTraining.training.id}">Edit</a>
+                                    <a style="color: #fd0dc4;" href="/admin/${userProfile.id}/editTraining/${userTraining.training.id}">Edit</a>
                                 </td>
                                 <td>
-                                    <a style="color: #fd0dc4;" href="/staff/detail?id=${userProfile.id}">Detail</a>
+                                    <a style="color: #fd0dc4;" href="/admin/showUserDetail?id=${userProfile.id}">Detail</a>
                                 </td>
                             </tr>
                             </c:forEach>
+                            <td>
+                             <button type="button" class="btn btn-primary" onclick="window.location.href='/';">Cancel</button>
+                            </td>
                         </table>
                     </form:form>
                    </div>

@@ -30,7 +30,7 @@
                                             <div class="card-body">
                                                 <h5 class="card-title"><strong>Department Name</strong>: ${department.departmentName}</h5>
                                                 <p class="card-text"><strong>Description</strong>: ${department.description}</p>
-                                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                                <a href="${department.departmentDetail}" class="btn btn-primary">Go somewhere</a>
                                             </div>
                                             <div class="card-footer">
                                                 <small class="text-muted">ID: ${department.id}</small>

@@ -23,4 +23,7 @@ public class Department {
 
     @Column(name = "image_url")
     private String imageUrl;
+
+    @Column(name = "department_detail")
+    private String departmentDetail;
 }

@@ -29,6 +29,7 @@
                                     <td>Job Title</td>
                                     <td>Office ID</td>
                                     <td>Address</td>
+                                    <td>Show Profile</td>
                                 </tr>
                                 <c:forEach items="${userVar}" var="user">
                                     <tr>
@@ -40,9 +41,14 @@
                                         <td>${user.jobTitle}</td>
                                         <td>${user.office_Id}</td>
                                         <td>${user.address}</td>
+                                        <td>
+                                            <a href="/admin/showProfile?id=${user.id}">Profile</a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
+
                             </table>
+                             <button type="button"  style="margin-left: 100rem" class="btn btn-primary" onclick="window.location.href='/';">Cancel</button>
                             </div>
                          </div>
                       </div>

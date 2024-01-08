@@ -23,11 +23,8 @@
                       <input type="text" class="form-control" id="departmentName" name="departmentName" placeholder="Search by department name" value="${departmentName}"/>
                    </div>
              </div>
-             <div class="row justify-content-center pt-4">
-                   <div class="col-12 text-center">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-             </div>
+              <button type="submit" style="margin-left: 49rem" class="mb-5 mt-3 btn btn-primary">Submit</button>
+              <button type="button" style="margin-left: 21rem" class="mb-5 mt-3 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
 
         </form>
     </div>
@@ -55,9 +52,10 @@
                                     <td>${department.id}</td>
                                     <td>${department.departmentName}</td>
                                     <td>${department.description}</td>
-                                    <td><img src="${department.imageUrl}" style="width:30px; height: 30px"></td>
+                                    <td>${department.departmentDetail}</td>
+                                    <td><img src="${department.imageUrl}" style="width:60px; height: 60px; margin-right: 20px"></td>
                                     <td>
-                                        <a href="/admin/edit/${department.id}">Edit</a>
+                                        <a href="/admin/editDepartment/${department.id}">Edit</a>
                                     </td>
                                      <td>
                                         <a href="/admin/detailDepartment?id=${department.id}">Detail</a>

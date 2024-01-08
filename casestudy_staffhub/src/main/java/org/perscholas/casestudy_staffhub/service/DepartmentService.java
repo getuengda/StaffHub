@@ -23,6 +23,7 @@ public class DepartmentService {
         log.info("departmentName " + form.getDepartmentName());
         log.info("description " + form.getDescription());
         log.info("imageUrl " + form.getImageUrl());
+        log.info(("departmentDetail" + form.getDepartmentDetail()));
 
         Department department = departmentDao.findById(form.getId());
 
@@ -33,6 +34,7 @@ public class DepartmentService {
         department.setDepartmentName(form.getDepartmentName());
         department.setDescription(form.getDescription());
         department.setImageUrl(form.getImageUrl());
+        department.setDepartmentDetail(form.getDepartmentDetail());
 
         return departmentDao.save(department);
     }

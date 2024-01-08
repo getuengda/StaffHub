@@ -13,6 +13,7 @@
 <section class="bg-light1 pt-5 pb-5">
     <div class="container">
         <form action="/staff/${userId}/addTraining" method="post">
+            <input type="hidden" name="userId" value="${userId}">
             <label for="trainingName">Training Name:</label>
             <select name="trainingId" class="form-control" required>
                 <c:forEach var="training" items="${trainingList}">
@@ -23,8 +24,12 @@
             <label for="enrollmentDate">Enrollment Date:</label>
             <input type="datetime-local" name="enrollmentDate" class="form-control" required>
             <br>
-             <label for="status">Status:</label>
-             <input type="text" class="form-control" id="status" name="status" value="${form.status}">
+            <label for="status">Status:</label>
+            <select  id="status" name="status" class="form-control">
+                 <option value="Enrolled">Enrolled</option>
+                 <option value="In Progress">In Progress</option>
+                 <option value="Completed">Completed</option>
+             </select>
             <br>
             <input type="submit" class="btn btn-primary" value="Add Training">
         </form>

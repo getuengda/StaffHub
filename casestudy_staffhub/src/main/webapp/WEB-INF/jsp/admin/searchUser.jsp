@@ -31,12 +31,8 @@
                         <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Search by last name" value="${lastName}"/>
                    </div>
              </div>
-
-             <div class="row justify-content-center pt-4">
-                   <div class="col-12 text-center">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-             </div>
+            <button type="submit" style="margin-left: 49rem" class="mb-5 mt-3 btn btn-primary">Submit</button>
+            <button type="button" style="margin-left: 21rem" class="mb-5 mt-3 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
 
         </form>
     </div>
@@ -78,7 +74,7 @@
                                         <a href="/admin/editUser/${user.id}">Edit</a>
                                     </td>
                                     <td>
-                                        <a href="/admin/showUserProfile?id=${user.id}">Profile</a>
+                                        <a href="/admin/showProfile?id=${user.id}">Profile</a>
                                     </td>
                                     <td>
                                         <a href="/admin/showUserDetail?id=${user.id}">Detail</a>

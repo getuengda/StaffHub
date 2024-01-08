@@ -5,20 +5,21 @@ import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.perscholas.casestudy_staffhub.database.dao.*;
 import org.perscholas.casestudy_staffhub.database.entity.*;
-import org.perscholas.casestudy_staffhub.formbean.DepartmentFormBean;
-import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
-import org.perscholas.casestudy_staffhub.formbean.UserProfileDTO;
+import org.perscholas.casestudy_staffhub.formbean.*;
 import org.perscholas.casestudy_staffhub.security.AuthenticatedUserService;
 import org.perscholas.casestudy_staffhub.service.DepartmentService;
+import org.perscholas.casestudy_staffhub.service.TrainingService;
 import org.perscholas.casestudy_staffhub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +64,17 @@ public class AdminSystemController {
     @Autowired
     private UserRoleDAO userRoleDao;
 
+    @Autowired
+    private TrainingService trainingService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
 
     @GetMapping("/admin/createDepartment")
     public ModelAndView create(){
@@ -77,10 +90,10 @@ public class AdminSystemController {
         return response;
     }
 
-    @GetMapping("/admin/createSubmitDepartment")
+    @GetMapping("/admin/createDepartmentSubmit")
     public ModelAndView createDepartment(@Valid @ModelAttribute DepartmentFormBean form, BindingResult bindingResult ) {
         if(bindingResult.hasErrors()){
-            log.info("########## In create user submit");
+            log.info("########## In create department submit");
             ModelAndView response = new ModelAndView("admin/createDepartment");
 
             for(ObjectError error : bindingResult.getAllErrors()){
@@ -101,9 +114,9 @@ public class AdminSystemController {
     }
 
 
-    @GetMapping("/admin/edit/{departmentId}")
+    @GetMapping("/admin/editDepartment/{departmentId}")
     public ModelAndView edit(@PathVariable Integer departmentId, @RequestParam(required = false) String success) {
-        ModelAndView response = new ModelAndView("/admin/createDepartment");
+        ModelAndView response = new ModelAndView("admin/createDepartment");
 
         Department department = departmentDao.findById(departmentId);
 
@@ -123,6 +136,7 @@ public class AdminSystemController {
             form.setDepartmentName(department.getDepartmentName());
             form.setDescription(department.getDescription());
             form.setImageUrl(department.getImageUrl());
+            department.setDepartmentDetail(form.getDepartmentDetail());
         } else {
             log.info("Department with id " +  department.getId() + " was not found");
         }
@@ -435,6 +449,18 @@ public class AdminSystemController {
         return response;
     }
 
+    @GetMapping("/admin/addTraining")
+    public ModelAndView showAddTrainingForm(@RequestParam Integer userId) {
+        ModelAndView response = new ModelAndView("admin/addTraining");
+
+        List<Training> trainingList = trainingDao.findAll();
+
+        response.addObject("userId", userId);
+        response.addObject("trainingList", trainingList);
+
+        return response;
+    }
+
     @PostMapping("/admin/{userId}/addTraining")
     public ModelAndView addTraining(@PathVariable Integer userId,
                                     @RequestParam Integer trainingId,
@@ -464,13 +490,50 @@ public class AdminSystemController {
     }
 
 
-    @GetMapping("/admin/addTraining")
-    public ModelAndView showAddTrainingForm(@RequestParam Integer userId) {
-        ModelAndView response = new ModelAndView("admin/addTraining");
+    @PostMapping("/admin/{userId}/editTraining/{trainingId}")
+    public ModelAndView editTraining(@PathVariable Integer userId,
+                                     @PathVariable Integer trainingId,
+                                     @RequestParam(required = false) String enrollmentDate,
+                                     @RequestParam(required = false) String completionDate,
+                                     @RequestParam String status,
+                                     RedirectAttributes redirectAttributes) throws ParseException {
+        ModelAndView response = new ModelAndView("admin/editTraining");
+        log.debug("Editing training for userId: " + userId);
 
+        // Fetch single user by id
+        User user = authenticatedUserService.loadCurrentUser();
+        //User user = userDao.findById(userId);
+        userId = user.getId();
+        Training training = trainingDao.findById(trainingId);
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
+        Date date = dateFormatter.parse(enrollmentDate);
+        Date date1 = dateFormatter.parse(completionDate);
+
+        UserTraining userTraining = userTrainingDao.findByUserIdAndTrainingId(userId, trainingId);
+        userTraining.setEnrollmentDate(date);
+        userTraining.setCompletionDate(date1);
+        userTraining.setUser(user);
+        userTraining.setTraining(training);
+        userTraining.setStatus(status);
+        userTrainingDao.save(userTraining);
+
+        response.addObject("user", user);
+        //response.setViewName("redirect:/staff/" + userId + "/profile");
+
+        return response;
+    }
+
+    @GetMapping("/admin/{userId}/editTraining/{trainingId}")
+    public ModelAndView showEditTrainingForm(@PathVariable Integer userId, @PathVariable Integer trainingId) {
+        ModelAndView response = new ModelAndView("admin/editTraining");
+
+        UserTraining userTraining = userTrainingDao.findByUserIdAndTrainingId(userId, trainingId);
         List<Training> trainingList = trainingDao.findAll();
 
         response.addObject("userId", userId);
+        response.addObject("trainingId", trainingId);
+        response.addObject("userTraining", userTraining);
         response.addObject("trainingList", trainingList);
 
         return response;
@@ -523,33 +586,261 @@ public class AdminSystemController {
         return response;
     }
 
-    @GetMapping("/admin/{userId}/showUserProfile")
-    public String showUserProfile(@PathVariable Integer userId) {
+    @GetMapping("/admin/showProfile")
+    public ModelAndView userProfile(){
+        ModelAndView response = new ModelAndView("admin/showProfile");
+        log.debug("In the user show profile controller method firstName");
 
-        ModelAndView response = new ModelAndView("admin/showUserProfile");
+        // Fetch single user by id
+        User user = authenticatedUserService.loadCurrentUser();
 
-        UserProfileDTO userProfile = userService.getUserProfileById(userId);
-
-        if (userProfile == null) {
-            return "redirect:/error";
-        }
-
-        response.addObject("userProfile", userProfile);
-        return String.valueOf(response);
-    }
-
-    @GetMapping("admin/showUserProfile")
-    public String userProfile(@RequestParam("id") Integer userId, Model model) {
-        log.debug("In the user profile controller method id: " + userId);
-
-        UserProfileDTO userProfile = userService.getUserProfileById(userId);
+        UserProfileDTO userProfile = userService.getUserProfileById(user.getId());
 
         if (userProfile == null) {
-            return "redirect:/error";
+            throw new ResourceNotFoundException("User not found with id " + user.getId());
+        } else{
+            response.addObject("userProfile", userProfile);
+            response.addObject("user", user);
+        }
+        return response;
+    }
+
+    @PostMapping("/admin/showProfileSubmit")
+    public String userProfileSubmit(@PathVariable Integer userId, RedirectAttributes redirectAttributes) {
+
+        UserProfileDTO userProfile = userService.getUserProfileById(userId);
+        if (userProfile == null) {
+            throw new ResourceNotFoundException("User not found with id " + userId);
+        }
+        redirectAttributes.addFlashAttribute("success", "Staff Saved Successfully");
+        return "redirect:/admin/showProfile/" + userId;
+    }
+
+
+    @PostMapping("/admin/editShowProfile/{userId}")
+    public ModelAndView editUserProfile(@PathVariable Integer userId, @RequestParam(required = false) String success) {
+        ModelAndView response = new ModelAndView("admin/showProfile");
+
+        User user = userDao.findById(userId);
+
+
+        if (!StringUtils.isEmpty(success)) {
+            response.addObject("success", success);
         }
 
-        model.addAttribute("userProfile", userProfile);
+        UserProfileDTO userProfileDTO = new UserProfileDTO();
+        userProfileDTO.setId(user.getId());
+        userProfileDTO.setFirstName(user.getFirstName());
+        userProfileDTO.setLastName(user.getLastName());
+        userProfileDTO.setEmail(user.getEmail());
+        userProfileDTO.setJobTitle(user.getJobTitle());
+        userProfileDTO.setOffice_Id(user.getOffice_Id());
+        userProfileDTO.setAddress(user.getAddress());
+        userProfileDTO.setImageUrl(user.getImageUrl());
 
-        return "admin/showUserProfile";
+        // Checking if user and department are not null before accessing their attributes
+        if (user.getDepartment() != null) {
+            populateDepartmentDetails(userProfileDTO, user.getDepartment());
+        } else {
+            setDefaultDepartmentValues(userProfileDTO);
+        }
+
+
+        List<UserTraining> userTrainings = userTrainingDao.findByUserId(user.getId());
+
+        List<UserTrainingFormBean> userTrainingBeans = new ArrayList<>();
+        for (UserTraining userTraining : userTrainings) {
+            UserTrainingFormBean userTrainingBean = populateTrainingDetails(userTraining);
+            userTrainingBeans.add(userTrainingBean);
+        }
+
+        userProfileDTO.setUserTrainings(userTrainingBeans);
+
+        response.addObject("userProfile", userProfileDTO);
+        response.addObject("user", user);
+
+        return response;
     }
+
+    private void populateDepartmentDetails(UserProfileDTO userProfileDTO, Department department) {
+        userProfileDTO.setDepartmentId(department.getId());
+        userProfileDTO.setDepartmentName(department.getDepartmentName());
+        userProfileDTO.setDescription(department.getDescription());
+        userProfileDTO.setDepartmentDetail(department.getDepartmentDetail());
+    }
+
+    private void setDefaultDepartmentValues(UserProfileDTO userProfileDTO) {
+        userProfileDTO.setDepartmentId(null);
+        userProfileDTO.setDepartmentName("N/A");
+        userProfileDTO.setDescription("N/A");
+        userProfileDTO.setDepartmentDetail("N/A");
+    }
+
+    private UserTrainingFormBean populateTrainingDetails(UserTraining userTraining) {
+        UserTrainingFormBean userTrainingBean = new UserTrainingFormBean();
+        userTrainingBean.setId(userTraining.getId());
+        userTrainingBean.setUser(userTraining.getUser());
+        userTrainingBean.setTraining(userTraining.getTraining());
+        userTrainingBean.setEnrollmentDate(userTraining.getEnrollmentDate());
+        userTrainingBean.setCompletionDate(userTraining.getCompletionDate());
+        userTrainingBean.setStatus(userTraining.getStatus());
+        return userTrainingBean;
+    }
+
+    @GetMapping("/admin/createTraining")
+    public ModelAndView createTraining() {
+        ModelAndView response = new ModelAndView("admin/createTraining");
+        log.info("In create training with no args");
+
+        return response;
+    }
+
+    @PostMapping("/admin/createTrainingSubmit")
+    public ModelAndView createTrainingSubmit(@Valid @ModelAttribute TrainingFormBean form, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.info("########## In create training submit");
+            ModelAndView response = new ModelAndView("admin/createTraining");
+
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                log.info("error: " + error.getDefaultMessage());
+            }
+            response.addObject("form", form);
+            response.addObject("errors", bindingResult);
+
+            return response;
+        }
+
+        Training t = trainingService.createTraining(form);
+
+        ModelAndView response = new ModelAndView();
+        response.setViewName("redirect:/admin/editTraining/" + t.getId() + "?success=Training Saved Successfully");
+
+        return response;
+    }
+
+    @GetMapping("/admin/editTraining/{trainingId}")
+    public ModelAndView editTraining(@PathVariable Integer trainingId, @RequestParam(required = false) String success) {
+        ModelAndView response = new ModelAndView("admin/createTraining");
+
+        Training training = trainingDao.findById(trainingId);
+
+        if (!StringUtils.isEmpty(success)) {
+            response.addObject("success", success);
+        }
+
+        TrainingFormBean form = new TrainingFormBean();
+
+        if (training != null) {
+            form.setId(training.getId());
+            form.setTrainingName(training.getTrainingName());
+            form.setDatePosted(training.getDatePosted() != null ? training.getDatePosted().toString() : null);
+            form.setDescription(training.getDescription());
+            form.setPrerequisite(training.getPrerequisite());
+            form.setImageUrl(training.getImageUrl());
+            form.setTrainingDetail(training.getTrainingDetail());
+        } else {
+            log.info("Training with id " + trainingId + " was not found");
+        }
+
+        response.addObject("form", form);
+
+        return response;
+    }
+
+    @GetMapping("/admin/searchTraining")
+    public ModelAndView searchTraining(@RequestParam(required = false) String trainingName){
+        ModelAndView response = new ModelAndView("admin/searchTraining");
+        log.info("In the training search controller method trainingName: " + trainingName);
+
+        if(!StringUtils.isEmpty(trainingName)){
+            response.addObject("trainingName", trainingName);
+
+            if(!StringUtils.isEmpty(trainingName)){
+                trainingName = "%" + trainingName + "%";
+            }
+
+            List<Training> trainings = trainingDao.findTrainingByName(trainingName);
+            response.addObject("trainingVar", trainings);
+
+            for(Training training : trainings){
+                log.info("training: id= " + training.getId() + "training Name = " + training.getTrainingName());
+                log.info("training: id= " + training.getId() + "description = " + training.getDescription());
+            }
+        }
+        return response;
+    }
+
+    @GetMapping("/admin/detailTraining")
+    public ModelAndView trainingDetail(@RequestParam(required = false) Integer id) {
+        ModelAndView response = new ModelAndView("admin/detailTraining");
+        log.debug("In the training detail controller method id: " + id);
+
+        // Fetch single training by id
+        Training training = trainingDao.findById(id);
+
+        if (training != null) {
+            response.addObject("training", training);
+        } else {
+            log.warn("Training with id " + id + " not found");
+        }
+
+        return response;
+    }
+
+    @GetMapping("/admin/fileuploadTraining")
+    public ModelAndView fileUploadTraining(@RequestParam Integer id) {
+        ModelAndView response = new ModelAndView("admin/fileuploadTraining");
+
+        Training training = trainingDao.findById(id);
+        response.addObject("training", training);
+
+        log.info(" In fileupload with no Args");
+        return response;
+    }
+
+    @PostMapping("/admin/fileUploadTrainingSubmit")
+    public ModelAndView fileUploadTrainingSubmit(@RequestParam("file") MultipartFile file,
+                                         @RequestParam Integer id) {
+        ModelAndView response = new ModelAndView("redirect:/admin/detailTraining?id=" + id);
+
+        log.info("Filename = " + file.getOriginalFilename());
+        log.info("Size     = " + file.getSize());
+        log.info("Type     = " + file.getContentType());
+
+
+        // Get the file and save it somewhere
+        File f = new File("./src/main/webapp/pub/images/" + file.getOriginalFilename());
+        try (OutputStream outputStream = new FileOutputStream(f.getAbsolutePath())) {
+            IOUtils.copy(file.getInputStream(), outputStream);
+        } catch (Exception e) {
+
+
+            e.printStackTrace();
+        }
+
+        Training training = trainingDao.findById(id);
+        training.setImageUrl("/pub/images/" + file.getOriginalFilename());
+        trainingDao.save(training);
+
+        return response;
+    }
+
+    @GetMapping("/admin/showAllTraining")
+    public ModelAndView showAllTraining() {
+        ModelAndView response = new ModelAndView("admin/showAllTraining");
+        log.info("In the training showAllTraining controller method");
+
+        // Fetch all trainings
+        List<Training> trainings = trainingService.getAllTrainings();
+
+        // Add trainings to the model
+        response.addObject("trainingVar", trainings);
+
+        for(Training training : trainings){
+            log.info("training: id= " + training.getId() + "Training Name = " + training.getTrainingName());
+        }
+
+        return response;
+    }
+
 }

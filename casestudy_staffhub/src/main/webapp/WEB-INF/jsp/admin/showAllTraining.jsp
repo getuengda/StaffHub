@@ -13,7 +13,7 @@
 
 <section class="bg-light1 pt-5 pb-5">
     <div class="container">
-        <form action="/training/showAll">
+        <form action="/admin/showAllTraining">
       <c:if test="${not empty trainingVar}">
                   <section class="bg-light1 pb-5">
                         <div class="container">

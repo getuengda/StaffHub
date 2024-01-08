@@ -35,10 +35,6 @@
                                     <td>
                                 </tr>
                             </table>
-
-                            <form action="/department/edit/${department.id}">
-                            <button type="submit" class="btn col-12 btn-primary">Edit</button>
-                            </form>
                         </div>
                     </div>
                 </div>

@@ -4,11 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.perscholas.casestudy_staffhub.database.dao.*;
 import org.perscholas.casestudy_staffhub.database.entity.*;
-import org.perscholas.casestudy_staffhub.formbean.RegisterUserFormBean;
-import org.perscholas.casestudy_staffhub.formbean.UserFormBean;
+import org.perscholas.casestudy_staffhub.formbean.*;
 
-import org.perscholas.casestudy_staffhub.formbean.UserProfileDTO;
-import org.perscholas.casestudy_staffhub.formbean.UserTrainingFormBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -252,5 +249,4 @@ public class UserService {
         userTrainingBean.setCompletionDate(new Date("N/A"));
         userTrainingBean.setStatus("N/A");
     }
-
 }

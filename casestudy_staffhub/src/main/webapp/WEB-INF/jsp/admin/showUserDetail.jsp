@@ -31,6 +31,7 @@
                                     <td>Address</td>
                                     <td>Image</td>
                                     <td>Add Training</td>
+                                    <td>Action</td>
                                 </tr>
                                 <tr>
                                     <td>${user.id}</td>
@@ -44,11 +45,14 @@
                                     <td>
                                         <a href="/admin/addTraining?userId=${user.id}">Add Training</a>
                                     </td>
+                                    <td>
+                                     <button type="button"  class="btn col-12 ml-auto btn-primary" onclick="window.location.href='/';">Cancel</button>
+                                    </td>
                                 </tr>
                             </table>
 
-                            <form action="/admin/edit/${user.id}">
-                            <button type="submit" class="btn col-12 btn-primary">Edit</button>
+                            <form action="/admin/editUser/${user.id}">
+                            <button type="submit" style="margin-left: 105rem" class="btn col-1 btn-primary">Edit</button>
                             </form>
                         </div>
                     </div>

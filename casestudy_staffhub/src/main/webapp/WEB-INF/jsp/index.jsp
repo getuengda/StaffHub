@@ -2,7 +2,7 @@
 <jsp:include page="include/header.jsp"/>
 
 <section>
-    <div class="bg-light2 pt-5 pb-5">
+    <div class="bg-beige pt-5 pb-5">
        <div class="row">
            <div class="col-12 text-center">
 
@@ -11,12 +11,12 @@
                    <div class="row justify-content-center mt-5">
                          <section id="searchFormSection">
 
-                             <label for="searchType">Search for:</label>
+                             <label style="color: white; font-size: 16px" for="searchType">Search for:</label>
                              <div id="searchType">
                                  <input type="radio" id="trainings" name="searchType" value="/training/search" onchange="changeAction(this)">
-                                 <label for="trainings">Trainings</label>
+                                 <label style="color: white; font-size: 18px" for="trainings">Trainings</label>
                                  <input type="radio" id="departments" name="searchType" value="/department/search" onchange="changeAction(this)">
-                                 <label for="departments">Departments</label>
+                                 <label style="color: white; font-size: 18px" for="departments">Departments</label>
                              </div>
                            <div class="row justify-content-center pt-4 pl-5" style="display: flex; align-items: center;">
                                <div class="col-7 mr-0 ml-5 pl-5" id="inputField" style="flex-grow: 1;"></div>
@@ -137,7 +137,7 @@
                           </div>
 
                           <div class="item">
-                            <img src="/pub/images/image1.jpg" alt="Research" style="width:100%;">
+                            <img src="/pub/images/tech.jpg" alt="Research" style="width:100%;">
                             <div class="carousel-caption">
                               <h3>Research</h3>
                               <p>We Research Out of the Box & Boundary of Hemisphere!</p>
