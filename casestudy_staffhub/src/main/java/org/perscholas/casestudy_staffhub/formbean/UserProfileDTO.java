@@ -32,6 +32,8 @@ public class UserProfileDTO {
 
     private String description;
 
+    private String departmentDetail;
+
     private List<UserTrainingFormBean> userTrainings;
 
     public void setUserTrainings(List<UserTrainingFormBean> userTrainings) {

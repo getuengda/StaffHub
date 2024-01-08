@@ -96,6 +96,7 @@ public class TrainingController {
             form.setDescription(training.getDescription());
             form.setPrerequisite(training.getPrerequisite());
             form.setImageUrl(training.getImageUrl());
+            form.setTrainingDetail(training.getTrainingDetail());
         } else {
             log.info("Training with id " + trainingId + " was not found");
         }

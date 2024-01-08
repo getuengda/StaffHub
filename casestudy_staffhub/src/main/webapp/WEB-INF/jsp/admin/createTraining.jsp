@@ -14,7 +14,7 @@
 
 <div class="d-flex justify-content-center align-items-center">
 
-        <form method="post" action="/training/createSubmit" style="width: 50%;">
+        <form method="post" action="/admin/createTrainingSubmit" style="width: 50%;">
                             <c:if test="${not empty success}">
                                     <div class="row justify-content-center">
                                         <div class="col-6 text-center">

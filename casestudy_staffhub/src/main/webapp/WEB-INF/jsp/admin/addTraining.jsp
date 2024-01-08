@@ -24,7 +24,11 @@
             <input type="datetime-local" name="enrollmentDate" class="form-control" required>
             <br>
              <label for="status">Status:</label>
-             <input type="text" class="form-control" id="status" name="status" value="${form.status}">
+             <select  id="status" name="status" class="form-control">
+                 <option value="Enrolled">Enrolled</option>
+                 <option value="In Progress">In Progress</option>
+                 <option value="Completed">Completed</option>
+             </select>
             <br>
             <input type="submit" class="btn btn-primary" value="Add Training">
         </form>

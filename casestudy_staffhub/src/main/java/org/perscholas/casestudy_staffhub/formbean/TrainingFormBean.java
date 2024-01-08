@@ -22,4 +22,6 @@ public class TrainingFormBean {
     private String imageUrl;
 
     private Integer userId;
+
+    private String trainingDetail;
 }

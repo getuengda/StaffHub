@@ -29,6 +29,7 @@
                                     <td>Job Title</td>
                                     <td>Office ID</td>
                                     <td>Address</td>
+                                    <td>showProfile</td>
                                 </tr>
                                 <c:forEach items="${userVar}" var="user">
                                     <tr>
@@ -40,6 +41,9 @@
                                         <td>${user.jobTitle}</td>
                                         <td>${user.office_Id}</td>
                                         <td>${user.address}</td>
+                                         <td>
+                                            <a href="/staff/profile?id=${user.id}">Profile</a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </table>

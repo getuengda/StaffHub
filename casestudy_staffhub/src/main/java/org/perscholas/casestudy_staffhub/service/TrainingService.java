@@ -36,6 +36,7 @@ public class TrainingService {
         training.setDescription(form.getDescription());
         training.setPrerequisite(form.getPrerequisite());
         training.setImageUrl(form.getImageUrl());
+        training.setTrainingDetail(form.getTrainingDetail());
 
         return trainingDao.save(training);
     }

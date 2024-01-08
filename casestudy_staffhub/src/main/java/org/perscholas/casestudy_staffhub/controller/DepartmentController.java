@@ -6,9 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.perscholas.casestudy_staffhub.database.dao.DepartmentDAO;
 import org.perscholas.casestudy_staffhub.database.entity.Department;
-import org.perscholas.casestudy_staffhub.database.entity.User;
 import org.perscholas.casestudy_staffhub.formbean.DepartmentFormBean;
-import org.perscholas.casestudy_staffhub.security.AuthenticatedUserService;
 import org.perscholas.casestudy_staffhub.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -93,6 +91,7 @@ public class DepartmentController {
             form.setDepartmentName(department.getDepartmentName());
             form.setDescription(department.getDescription());
             form.setImageUrl(department.getImageUrl());
+            form.setDepartmentDetail(department.getDepartmentDetail());
         } else {
             log.info("Department with id " +  department.getId() + " was not found");
         }

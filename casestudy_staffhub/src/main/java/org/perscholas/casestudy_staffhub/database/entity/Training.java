@@ -35,4 +35,7 @@ public class Training {
 
     @Column(name = "user_id")
     private Integer userId;
+
+    @Column(name = "training_detail")
+    private String trainingDetail;
 }

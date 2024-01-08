@@ -65,23 +65,17 @@ public class UserController {
     @Autowired
     UserRoleDAO userRoleDao;
 
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
+
     // Added to resolve Unparseable date: "", when I'm editing userTraining information and submit dateCompletion empty
     // because that might happen like status could be In Progress
     // This method will be called before each request is processed by the controller’s handler methods
-//    @InitBinder
-//    public void allowEmptyDateBinding( WebDataBinder binder ) {
-//        //Custom Date Editor
-//        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd-MM-yyyy");
-//        simpleDateFormat.setLenient(false);
-//        binder.registerCustomEditor( Date.class, new CustomDateEditor( simpleDateFormat,true));
-//    }
-
-    private String modifyDateLayout(String inputDate) throws ParseException {
-        if (inputDate == null || inputDate.isEmpty()) {
-            return null;
-        }
-        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").parse(inputDate);
-        return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date);
+    @InitBinder
+    public void allowEmptyDateBinding( WebDataBinder binder ) {
+        //Custom Date Editor
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd-MM-yyyy");
+        simpleDateFormat.setLenient(false);
+        binder.registerCustomEditor( Date.class, new CustomDateEditor( simpleDateFormat,true));
     }
 
     @GetMapping("/staff/create")
@@ -296,7 +290,6 @@ public class UserController {
     public ModelAndView addTraining(@PathVariable Integer userId,
                                     @RequestParam Integer trainingId,
                                     @RequestParam(required = false) String enrollmentDate,
-                                    @RequestParam(required = false) String completionDate,
                                     @RequestParam String status,
                                     RedirectAttributes redirectAttributes) throws ParseException {
         ModelAndView response = new ModelAndView("staff/addTraining");
@@ -305,23 +298,31 @@ public class UserController {
         User user = userDao.findById(userId);
         Training training = trainingDao.findById(trainingId);
 
-        String modifiedEnrollmentDate = modifyDateLayout(enrollmentDate);
-        String modifiedCompletionDate = modifyDateLayout(completionDate);
+        if (user == null || training == null) {
+            response.setViewName("error");
+            response.addObject("message", "User or Training not found");
+            return response;
+        }
 
-        Date date = modifiedEnrollmentDate != null ? new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(modifiedEnrollmentDate) : null;
-        Date date1 = modifiedCompletionDate != null ? new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(modifiedCompletionDate) : null;
-
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
+        Date date = null;
+        try {
+            date = dateFormatter.parse(enrollmentDate);
+        } catch (ParseException e) {
+            response.setViewName("error");
+            response.addObject("message", "Enrollment date is not in the correct format");
+            return response;
+        }
         UserTraining userTraining = new UserTraining();
 
         userTraining.setEnrollmentDate(date);
-        userTraining.setCompletionDate(date1);
         userTraining.setUser(user);
         userTraining.setTraining(training);
         userTraining.setStatus(status);
         userTrainingDao.save(userTraining);
 
         response.addObject("user", user);
-        response.setViewName("redirect:/staff/" + userId + "/detail");
+        response.setViewName("redirect:/staff/" + userId + "/profile");
 
         return response;
     }
@@ -350,15 +351,13 @@ public class UserController {
 
         // Fetch single user by id
         User user = authenticatedUserService.loadCurrentUser();
-        //User user = userDao.findById(userId);
+
         userId = user.getId();
         Training training = trainingDao.findById(trainingId);
 
-        String modifiedEnrollmentDate = modifyDateLayout(enrollmentDate);
-        String modifiedCompletionDate = modifyDateLayout(completionDate);
-
-        Date date = modifiedEnrollmentDate != null ? new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(modifiedEnrollmentDate) : null;
-        Date date1 = modifiedCompletionDate != null ? new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(modifiedCompletionDate) : null;
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
+        Date date = dateFormatter.parse(enrollmentDate);
+        Date date1 = dateFormatter.parse(completionDate);
 
         UserTraining userTraining = userTrainingDao.findByUserIdAndTrainingId(userId, trainingId);
         userTraining.setEnrollmentDate(date);
@@ -369,7 +368,7 @@ public class UserController {
         userTrainingDao.save(userTraining);
 
         response.addObject("user", user);
-        response.setViewName("redirect:/staff/" + userId + "/profile");
+        //response.setViewName("redirect:/staff/" + userId + "/profile");
 
         return response;
     }

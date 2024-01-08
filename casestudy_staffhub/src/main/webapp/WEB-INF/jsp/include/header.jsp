@@ -20,7 +20,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
             crossorigin="anonymous"></script>
-    <script src="/pub/js/training.js"></script>
+    <script src="/pub/js/index2.js"></script>
 
 </head>
 <body>
@@ -40,7 +40,6 @@
               </li>
             <!-- ==================ADMIN===================== -->
              <sec:authorize access="hasAuthority('ADMIN')">
-             <!-- ==================TEST DEPT FROM ADMIN CONTROLLER===================== -->
              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
                 <div class="dropdown-menu">
@@ -49,6 +48,8 @@
                     <a class="dropdown-item" href="/admin/searchUser">Search Staff</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/admin/showLoggedUser">Show a Staff</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/showProfile">Show User Profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/admin/showAllUser">Show All Staffs</a>
                 </div>
@@ -61,24 +62,18 @@
                     <a class="dropdown-item" href="/admin/searchDepartment">Search Department</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/admin/showAllDepartment">Show All Departments</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/admin/findDepartment">Find Department By ID</a>
                 </div>
               </li>
-             <!-- ==================ABOVE TEST DEPT FROM ADMIN CONTROLLER===================== -->
-             <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Training</a>
-               <div class="dropdown-menu">
-                   <a class="dropdown-item" href="/training/create">Create Training</a>
-                   <div class="dropdown-divider"></div>
-                   <a class="dropdown-item" href="/training/search">Search Training</a>
-                   <div class="dropdown-divider"></div>
-                   <a class="dropdown-item" href="/training/showAll">Show All Trainings</a>
-                   <div class="dropdown-divider"></div>
-                   <a class="dropdown-item" href="/training/find">Find Training By postedDate</a>
-               </div>
-             </li>
-
+              <li class="nav-item dropdown">
+                 <a class="nav-link dropdown-toggle" style="color: #fd0dc4; font-size: 16px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Training</a>
+                 <div class="dropdown-menu">
+                     <a class="dropdown-item" href="/admin/createTraining">Create Training</a>
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="/admin/searchTraining">Search Training</a>
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="/admin/showAllTraining">Show All Trainings</a>
+                 </div>
+               </li>
          </sec:authorize>
          <!-- ==================USER===================== -->
          <sec:authorize access="hasAuthority('USER')">

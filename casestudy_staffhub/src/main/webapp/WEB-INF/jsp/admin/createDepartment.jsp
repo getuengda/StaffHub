@@ -15,7 +15,7 @@
 
     <div class="container d-flex justify-content-center align-items-center">
 
-        <form method="get" action="/admin/createSubmitDepartment" style="width: 50%;">
+        <form method="get" action="/admin/createDepartmentSubmit" style="width: 50%;">
                             <c:if test="${not empty success}">
                                             <div class="row justify-content-center">
                                                 <div class="col-6 text-center">
@@ -29,23 +29,21 @@
                        <label for="departmentName" class="form-label">Department Name</label>
                        <input type="text" class="form-control" id="departmentName" name="departmentName" value="${form.departmentName}">
               </div>
-              <c:if test="${errors.hasFieldErrors('departmentName')}">
-                 <div class="error" style="color:red; margin-left:15px;">
-                     <c:forEach items="${errors.getFieldErrors('departmentName')}" var="error">
-                         ${error.defaultMessage}<br>
-                     </c:forEach>
-                 </div>
-             </c:if>
               <div class="mb-3">
                   <label for="yourTextarea" class="form-label">Description</label>
-                  <input class="form-control" id="description" name="description" value="${form.description}" style="width: 555px; height: 100px;">
+                  <input class="form-control" id="description" name="description" value="${form.description}" style="width: 568px; height: 100px;">
                </div>
                 <div class="mb-3">
                     <label for="imageUrl" class="form-label">Image URL</label>
                     <input type="text" class="form-control" id="imageUrl" name="imageUrl" value="${form.imageUrl}">
                 </div>
+                <div class="mb-3">
+                    <label for="departmentDetail" class="form-label">Department Detail</label>
+                    <input type="text" class="form-control" id="departmentDetail" name="departmentDetail" value="${form.departmentDetail}">
+                </div>
 
             <button type="submit" class="mb-5 btn btn-primary">Submit</button>
+            <button type="button" style="margin-left: 42rem" class="mb-5 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
         </form>
     </div>
 

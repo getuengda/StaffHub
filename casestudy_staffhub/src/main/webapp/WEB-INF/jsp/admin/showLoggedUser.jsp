@@ -32,6 +32,7 @@
                                     <td>Profile</td>
                                     <td>Detail</td>
                                     <td>Upload</td>
+                                    <td>Action</td>
                                 </tr>
                                 <tr>
                                     <td>${user.id}</td>
@@ -46,13 +47,16 @@
                                         <a href="/admin/editUser/${user.id}">Edit</a>
                                     </td>
                                     <td>
-                                        <a href="/admin/showUserProfile?id=${user.id}">Profile</a>
+                                        <a href="/admin/showProfile?id=${user.id}">Profile</a>
                                     </td>
                                     <td>
                                         <a href="/admin/showUserDetail?id=${user.id}">Detail</a>
                                     </td>
                                     <td>
                                         <a href="/admin/fileuploadForUser?id=${user.id}">Upload</a>
+                                    </td>
+                                    <td>
+                                     <button type="button"  class="btn btn-primary" onclick="window.location.href='/';">Cancel</button>
                                     </td>
                                 </tr>
                             </table>

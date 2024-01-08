@@ -12,10 +12,11 @@ public class DepartmentFormBean {
     private Integer id;
 
     @NotEmpty(message="Department Name is required.")
-    @Pattern(regexp = "^[a-zA-Z]{1,30}$")
     private String departmentName;
 
     private String description;
 
     private String imageUrl;
+
+    private String departmentDetail;
 }
