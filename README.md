@@ -6,7 +6,7 @@ A Personal Website for Managing Staff, Training and Departments. This website wa
 
 ## Screenshots
 
-![alt text](image.jpg)
+![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
 ## Tech Stack
 
