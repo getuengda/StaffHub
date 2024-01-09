@@ -80,7 +80,9 @@
                                 <td>Completion Date</td>
                                 <td>Status</td>
                                 <td>Edit</td>
-                                <td>Detail</td>
+                                <td>
+                                    <a type="button" class="btn btn-primary" href="/admin/addTraining?userId=${user.id}">Add Training</a>
+                                </td>
                             </tr>
                              <c:forEach items="${userProfile.userTrainings}" var="userTraining" varStatus="status">
                             <tr>
