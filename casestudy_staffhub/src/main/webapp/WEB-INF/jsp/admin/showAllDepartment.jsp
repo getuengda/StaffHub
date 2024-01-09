@@ -20,7 +20,7 @@
                         <div class="container">
                               <div class="row justify-content-center">
                                     <div class="col-12">
-                                          <h3 class="text-center pb-3">We have the following ${departmentVar.size()} departments currently</h3>
+                                          <h3 class="text-center pb-3">Currently we have the following ${departmentVar.size()} departments</h3>
 
                             <div class="row">
                                 <c:forEach items="${departmentVar}" var="department">
@@ -30,7 +30,7 @@
                                             <div class="card-body">
                                                 <h5 class="card-title"><strong>Department Name</strong>: ${department.departmentName}</h5>
                                                 <p class="card-text"><strong>Description</strong>: ${department.description}</p>
-                                                <a href="${department.departmentDetail}" class="btn btn-primary">Go somewhere</a>
+                                                <a href="${department.departmentDetail}" class="btn btn-primary">Show more</a>
                                             </div>
                                             <div class="card-footer">
                                                 <small class="text-muted">ID: ${department.id}</small>
