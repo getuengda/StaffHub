@@ -6,7 +6,7 @@ A Personal Website for Managing Staff, Training and Departments. This website wa
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot]([https://via.placeholder.com](https://github.com/getuengda/StaffHub/blob/main/AllTrainings2.png)/468x300?text=App+Screenshot+Here)
 
 
 ## Tech Stack
