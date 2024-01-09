@@ -13,7 +13,12 @@
 <section class="bg-light1 pt-5 pb-5">
     <div class="container">
         <form action="/staff/${userId}/addTraining" method="post">
-            <input type="hidden" name="userId" value="${userId}">
+        <input type="hidden" name="userId" value="${userId}">
+            <c:if test="${not empty errorMessage}">
+                <div class="alert alert-danger w-100 mb-0 text-center">
+                    ${errorMessage}
+                </div>
+            </c:if>
             <label for="trainingName">Training Name:</label>
             <select name="trainingId" class="form-control" required>
                 <c:forEach var="training" items="${trainingList}">
@@ -24,8 +29,8 @@
             <label for="enrollmentDate">Enrollment Date:</label>
             <input type="datetime-local" name="enrollmentDate" class="form-control" required>
             <br>
-            <label for="status">Status:</label>
-            <select  id="status" name="status" class="form-control">
+             <label for="status">Status:</label>
+             <select  id="status" name="status" class="form-control">
                  <option value="Enrolled">Enrolled</option>
                  <option value="In Progress">In Progress</option>
                  <option value="Completed">Completed</option>

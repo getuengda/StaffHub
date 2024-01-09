@@ -23,43 +23,32 @@
                       <input type="text" class="form-control" id="departmentName" name="departmentName" placeholder="Search by department name" value="${departmentName}"/>
                    </div>
              </div>
-             <div class="row justify-content-center pt-4">
-                   <div class="col-12 text-center">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-             </div>
-
+             <button type="submit" style="margin-left: 49rem" class="mb-5 mt-3 btn btn-primary">Submit</button>
+             <button type="button" style="margin-left: 21rem" class="mb-5 mt-3 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
         </form>
     </div>
 </section>
 
     <c:if test="${not empty departmentVar}">
               <section class="bg-light2 pb-5">
-                    <div class="container">
-                          <div class="row justify-content-center">
-                                <div class="col-12">
-                                      <h1 class="text-center pb-3">Department(s) Found: ${departmentVar.size()}</h1>
-
-                        <table class="table table-hover">
-                            <tr>
-                                <td>Id</td>
-                                <td>Department Name</td>
-                                <td>Description</td>
-                                <td>Image</td>
-                                <td>Detail</td>
-                            </tr>
-                            <c:forEach items="${departmentVar}" var="department">
-                                <tr>
-                                    <td>${department.id}</td>
-                                    <td>${department.departmentName}</td>
-                                    <td>${department.description}</td>
-                                    <td><img src="${department.imageUrl}" style="width:30px; height: 30px"></td>
-                                     <td>
-                                        <a href="/department/detail?id=${department.id}">Detail</a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </table>
+                  <div class="container">
+                      <div class="row justify-content-center">
+                         <div class="col-12">
+                         <c:forEach items="${departmentVar}" var="department">
+                            <div class="col-sm-4">
+                                <div class="card pb-3 mb-4">
+                                    <td><img src="${department.imageUrl}" style="width:354px; height: 300px"></td>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><strong>Department Name</strong>: ${department.departmentName}</h5>
+                                        <p class="card-text"><strong>Description</strong>: ${department.description}</p>
+                                        <a href="${department.departmentDetail}" class="btn btn-primary">Show more</a>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">ID: ${department.id}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
                         </div>
                      </div>
                   </div>

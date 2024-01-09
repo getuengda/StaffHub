@@ -16,7 +16,11 @@
         <div class="row justify-content-center">
             <div class="col-5">
                 <form method="get" action="/auth/registerSubmit" style="width: auto; height: auto; border: 20px solid grey; background-color: rgb(248, 243, 243);">
-
+                            <c:if test="${not empty errorMessage}">
+                                <div class="alert alert-danger w-100 mb-0 text-center">
+                                    ${errorMessage}
+                                </div>
+                            </c:if>
                     <div class="mt-3 col-12">
                         <label for="userType" class="form-label">User Type</label>
                         <select class="form-control" id="userType" name="userType">
