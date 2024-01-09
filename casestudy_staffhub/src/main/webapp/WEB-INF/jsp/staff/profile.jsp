@@ -79,7 +79,9 @@
                                 <td>Completion Date</td>
                                 <td>Status</td>
                                 <td>Edit</td>
-                                <td>Profile</td>
+                                <td>
+                                    <a type="button" class="btn btn-primary" href="/staff/addTraining?userId=${user.id}">Add Training</a>
+                                </td>
                             </tr>
                              <c:forEach items="${userProfile.userTrainings}" var="userTraining" varStatus="status">
                             <tr>
@@ -100,6 +102,9 @@
                                 </td>
                             </tr>
                             </c:forEach>
+                                <td>
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='/';">Cancel</button>
+                                </td>
                         </table>
                     </form:form>
                    </div>

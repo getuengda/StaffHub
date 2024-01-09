@@ -77,7 +77,7 @@
                     </c:if>
                     <div class="mt-3 col-12">
                         <label for="password" class="form-label">Password</label>
-                        <input type="text" class="form-control" id="password" name="password" value="${form.password}">
+                        <input type="password" class="form-control" id="password" name="password" value="${form.password}">
                     </div>
                     <c:if test="${errors.hasFieldErrors('password')}">
                         <div style="color:red; margin-left:15px;">
@@ -88,7 +88,7 @@
                     </c:if>
                     <div class="mt-3 col-12">
                         <label for="confirmPassword" class="form-label">Confirm Password</label>
-                        <input type="text" class="form-control" id="confirmPassword" name="confirmPassword" value="${form.confirmPassword}">
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="${form.confirmPassword}">
                     </div>
                     <c:if test="${errors.hasFieldErrors('confirmPassword')}">
                         <div style="color:red; margin-left:15px;">
