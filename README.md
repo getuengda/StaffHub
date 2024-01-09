@@ -5,14 +5,15 @@ A Personal Website for Managing Staff, Training and Departments. This website wa
 
 
 ## Screenshots
+![homePage](https://github.com/getuengda/StaffHub/assets/86804213/7a4c64ea-cb06-4f80-94f1-e4dbd72edea2)
 
-![App Screenshot](https://github.com/getuengda/StaffHub/blob/main/AllTrainings2.png)
+![ShowAllUser](https://github.com/getuengda/StaffHub/assets/86804213/2fdcb0f0-84ca-4a4c-8e56-9a0d73e3d5f6)
 
 ![ShowUserProfile](https://github.com/getuengda/StaffHub/assets/86804213/f881f949-e866-4fa0-a1e8-880934cdec39)
 
-![StaffHub_home](https://github.com/getuengda/StaffHub/assets/86804213/cfa49868-1e3f-45c6-bf77-06ce5df83a95)
+![App Screenshot](https://github.com/getuengda/StaffHub/blob/main/AllTrainings2.png)
 
-![ShowAllUser](https://github.com/getuengda/StaffHub/assets/86804213/2fdcb0f0-84ca-4a4c-8e56-9a0d73e3d5f6)
+![AllDepartments](https://github.com/getuengda/StaffHub/assets/86804213/10ebc1ef-5c4c-4501-8f69-d1f75d1fe8df)
 
 ## Tech Stack
 
