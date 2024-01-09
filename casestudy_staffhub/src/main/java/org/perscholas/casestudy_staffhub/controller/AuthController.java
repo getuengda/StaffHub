@@ -60,19 +60,22 @@ public class AuthController {
         response.setViewName("auth/register");
         return response;
     }
-
     @GetMapping("/auth/registerSubmit")
     public ModelAndView registerSubmit(@Valid RegisterUserFormBean form, BindingResult bindingResult, HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            log.info("####### In register user - has errors ######");
-            ModelAndView response = new ModelAndView("auth/register");
 
-            for (ObjectError error : bindingResult.getAllErrors()) {
-                log.info("error: " + error.getDefaultMessage());
-            }
+        if (!form.getPassword().equals(form.getConfirmPassword())) {
+            bindingResult.rejectValue("confirmPassword", "error.password.match");
+            ModelAndView response = new ModelAndView("auth/register");
 
             response.addObject("form", form);
             response.addObject("errors", bindingResult);
+            return response;
+        }
+
+        // check if email exists
+        if(userDao.countByEmail(form.getEmail()) > 0){
+            ModelAndView response = new ModelAndView("auth/register");
+            response.addObject("errorMessage", "Email already exists");
             return response;
         }
 

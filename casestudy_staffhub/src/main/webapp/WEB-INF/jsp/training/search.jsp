@@ -23,11 +23,8 @@
                       <input type="text" class="form-control" id="trainingName" name="trainingName" placeholder="Search by training name" value="${trainingName}"/>
                    </div>
              </div>
-             <div class="row justify-content-center pt-4">
-                   <div class="col-12 text-center">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-             </div>
+              <button type="submit" style="margin-left: 49rem" class="mb-5 mt-3 btn btn-primary">Submit</button>
+              <button type="button" style="margin-left: 21rem" class="mb-5 mt-3 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
 
         </form>
     </div>
@@ -35,43 +32,25 @@
 
     <c:if test="${not empty trainingVar}">
               <section class="bg-light1 pb-5">
-                    <div class="container">
-                          <div class="row justify-content-center">
-                                <div class="col-12">
-                                      <h1 class="text-center pb-3">Training(s) Found: ${trainingVar.size()}</h1>
-
-                        <table class="table table-hover">
-                            <tr>
-                                <td>Id</td>
-                                <td>Image</td>
-                                <td>Training Name</td>
-                                <td>Date Posted</td>
-                                <td>Description</td>
-                                <td>Prerequisite</td>
-                                <td>Edit</td>
-                                <td>Detail</td>
-                                <td>Upload</td>
-                            </tr>
-                            <c:forEach items="${trainingVar}" var="training">
-                                <tr>
-                                    <td>${training.id}</td>
-                                    <td><img src="${training.imageUrl}" style="width:60px; height: 60px"></td>
-                                    <td>${training.trainingName}</td>
-                                    <td>${training.datePosted}</td>
-                                    <td>${training.description}</td>
-                                    <td>${training.prerequisite}</td>
-                                    <td>
-                                        <a href="/training/edit/${training.id}">Edit</a>
-                                    </td>
-                                    <td>
-                                        <a href="/training/detail?id=${training.id}">Detail</a>
-                                    </td>
-                                    <td>
-                                        <a href="/training/fileupload?id=${training.id}">Upload</a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </table>
+                  <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                         <c:forEach items="${trainingVar}" var="training">
+                                <div class="col-sm-4">
+                                    <div class="card pb-3 mb-4">
+                                     <td><img src="${training.imageUrl}" style="width:354px; height: 300px"></td>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><strong>Training Name</strong>: ${training.trainingName}</h5>
+                                        <p class="card-text"><strong>Description</strong>: ${training.description}</p>
+                                        <p class="card-text"><strong>Prerequisite</strong>: ${training.prerequisite}</p>
+                                        <a href="${training.trainingDetail}" class="btn btn-primary">Show more</a>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">ID: ${training.id}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
                         </div>
                      </div>
                   </div>

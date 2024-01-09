@@ -286,47 +286,6 @@ public class UserController {
         return response;
     }
 
-    @PostMapping("/staff/{userId}/addTraining")
-    public ModelAndView addTraining(@PathVariable Integer userId,
-                                    @RequestParam Integer trainingId,
-                                    @RequestParam(required = false) String enrollmentDate,
-                                    @RequestParam String status,
-                                    RedirectAttributes redirectAttributes) throws ParseException {
-        ModelAndView response = new ModelAndView("staff/addTraining");
-        log.debug("Adding training for userId: " + userId);
-
-        User user = userDao.findById(userId);
-        Training training = trainingDao.findById(trainingId);
-
-        if (user == null || training == null) {
-            response.setViewName("error");
-            response.addObject("message", "User or Training not found");
-            return response;
-        }
-
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
-        Date date = null;
-        try {
-            date = dateFormatter.parse(enrollmentDate);
-        } catch (ParseException e) {
-            response.setViewName("error");
-            response.addObject("message", "Enrollment date is not in the correct format");
-            return response;
-        }
-        UserTraining userTraining = new UserTraining();
-
-        userTraining.setEnrollmentDate(date);
-        userTraining.setUser(user);
-        userTraining.setTraining(training);
-        userTraining.setStatus(status);
-        userTrainingDao.save(userTraining);
-
-        response.addObject("user", user);
-        response.setViewName("redirect:/staff/" + userId + "/profile");
-
-        return response;
-    }
-
     @GetMapping("/staff/addTraining")
     public ModelAndView showAddTrainingForm(@RequestParam Integer userId) {
         ModelAndView response = new ModelAndView("staff/addTraining");
@@ -335,6 +294,41 @@ public class UserController {
 
         response.addObject("userId", userId);
         response.addObject("trainingList", trainingList);
+
+        return response;
+    }
+
+    @PostMapping("/staff/{userId}/addTraining")
+    public ModelAndView addTraining(@PathVariable Integer userId,
+                                    @RequestParam Integer trainingId,
+                                    @RequestParam String enrollmentDate,
+                                    @RequestParam String status,
+                                    RedirectAttributes redirectAttributes) throws ParseException {
+        ModelAndView response = new ModelAndView("staff/addTraining");
+        log.debug("Adding training for userId: " + userId);
+
+        User user = userDao.findById(userId);
+        Training training = trainingDao.findById(trainingId);
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
+        Date date = dateFormatter.parse(enrollmentDate);
+
+        // check if user has the training in its List or not
+        if(userTrainingDao.countByUserIdAndTrainingId(userId, trainingId) > 0){
+            response.setViewName("staff/addTraining");
+            response.addObject("errorMessage", "Training already added");
+            return response;
+        }
+
+        UserTraining userTraining = new UserTraining();
+        userTraining.setEnrollmentDate(date);
+        userTraining.setUser(user);
+        userTraining.setTraining(training);
+        userTraining.setStatus(status);
+        userTrainingDao.save(userTraining);
+
+        response.addObject("user", user);
+        response.setViewName("redirect:/staff/" + userId + "/detail");
 
         return response;
     }

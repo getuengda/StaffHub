@@ -13,6 +13,12 @@
 <section class="bg-light1 pt-5 pb-5">
     <div class="container">
         <form action="/admin/${userId}/addTraining" method="post">
+        <c:if test="${not empty errorMessage}">
+            <div class="alert alert-danger w-100 mb-0 text-center">
+                ${errorMessage}
+            </div>
+        </c:if>
+        <input type="hidden" name="userId" value="${userId}">
             <label for="trainingName">Training Name:</label>
             <select name="trainingId" class="form-control" required>
                 <c:forEach var="training" items="${trainingList}">

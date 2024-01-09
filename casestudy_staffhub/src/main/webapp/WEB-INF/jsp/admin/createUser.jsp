@@ -125,7 +125,7 @@
                            </div>
                 </c:if>
                 <button type="submit" class="btn btn-primary mb-3 ml-4">Submit</button>
-                 <button type="button" style="margin-left: 85rem" class="mb-5 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
+                <button type="button" style="margin-left: 85rem" class="mb-5 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
             </form>
         </div>
 

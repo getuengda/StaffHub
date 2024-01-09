@@ -29,6 +29,13 @@
                        <label for="departmentName" class="form-label">Department Name</label>
                        <input type="text" class="form-control" id="departmentName" name="departmentName" value="${form.departmentName}">
               </div>
+               <c:if test="${errors.hasFieldErrors('departmentName')}">
+                          <div class="error" style="color:red">
+                              <c:forEach items="${errors.getFieldErrors('departmentName')}" var="error">
+                                  ${error.defaultMessage}<br>
+                              </c:forEach>
+                          </div>
+              </c:if>
               <div class="mb-3">
                   <label for="yourTextarea" class="form-label">Description</label>
                   <input class="form-control" id="description" name="description" value="${form.description}" style="width: 568px; height: 100px;">

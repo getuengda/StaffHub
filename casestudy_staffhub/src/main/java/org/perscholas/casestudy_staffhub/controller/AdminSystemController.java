@@ -473,6 +473,13 @@ public class AdminSystemController {
         User user = userDao.findById(userId);
         Training training = trainingDao.findById(trainingId);
 
+        // check if user has the training in its List or not
+        if(userTrainingDao.countByUserIdAndTrainingId(userId, trainingId) > 0){
+            response.setViewName("staff/addTraining");
+            response.addObject("errorMessage", "Training already added");
+            return response;
+        }
+
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormatter.parse(enrollmentDate);
 
@@ -488,7 +495,6 @@ public class AdminSystemController {
 
         return response;
     }
-
 
     @PostMapping("/admin/{userId}/editTraining/{trainingId}")
     public ModelAndView editTraining(@PathVariable Integer userId,

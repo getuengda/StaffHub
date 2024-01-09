@@ -23,11 +23,8 @@
                       <input type="text" class="form-control" id="trainingName" name="trainingName" placeholder="Search by training name" value="${trainingName}"/>
                    </div>
              </div>
-             <div class="row justify-content-center pt-4">
-                   <div class="col-12 text-center">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-             </div>
+             <button type="submit" style="margin-left: 49rem" class="mb-5 mt-3 btn btn-primary">Submit</button>
+             <button type="button" style="margin-left: 21rem" class="mb-5 mt-3 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
 
         </form>
     </div>

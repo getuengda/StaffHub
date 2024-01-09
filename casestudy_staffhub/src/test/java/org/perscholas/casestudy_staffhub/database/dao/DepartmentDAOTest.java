@@ -25,7 +25,7 @@ public class DepartmentDAOTest {
 
         //given
         Department department = new Department();
-        department.setDepartmentName("First Department");
+        department.setDepartmentName("First Department12345");
         department.setDescription("Programing will be re-engineered here");
         department.setImageUrl("image url");
 
@@ -34,7 +34,7 @@ public class DepartmentDAOTest {
 
         // then
         Assertions.assertNotNull(department.getId());
-        Assertions.assertEquals("First Department", department.getDepartmentName());
+        Assertions.assertEquals("First Department12345", department.getDepartmentName());
         Assertions.assertEquals("Programing will be re-engineered here", department.getDescription());
         Assertions.assertEquals("image url", department.getImageUrl());
 
@@ -44,7 +44,7 @@ public class DepartmentDAOTest {
     @Order(2)
     public void findByDepartmentName(){
         // given
-        String departmentName = "First Department";
+        String departmentName = "First Department12345";
 
         // when
         List<Department> departments = departmentDao.findDepartmentByName(departmentName);
@@ -53,7 +53,7 @@ public class DepartmentDAOTest {
         Department department = departments.get(0);
 
         Assertions.assertNotNull(department.getId());
-        Assertions.assertEquals("First Department", department.getDepartmentName());
+        Assertions.assertEquals("First Department12345", department.getDepartmentName());
         Assertions.assertEquals("Programing will be re-engineered here", department.getDescription());
         Assertions.assertEquals("image url", department.getImageUrl());
     }
@@ -63,7 +63,7 @@ public class DepartmentDAOTest {
     public void deleteDepartmentTest(){
 
         // given
-        String departmentName = "First Department";
+        String departmentName = "First Department12345";
         List<Department> departments = departmentDao.findDepartmentByName(departmentName);
 
         // when
@@ -78,7 +78,7 @@ public class DepartmentDAOTest {
     public void shouldNotExistTest(){
 
         // given
-        String departmentName = "First Department";
+        String departmentName = "First Department12345";
 
         // when
         List<Department> departments = departmentDao.findDepartmentByName(departmentName);
