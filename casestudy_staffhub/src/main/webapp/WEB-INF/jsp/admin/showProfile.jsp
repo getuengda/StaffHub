@@ -80,6 +80,7 @@
                                 <td>Completion Date</td>
                                 <td>Status</td>
                                 <td>Edit</td>
+                                <td>Detail</td>
                             </tr>
                              <c:forEach items="${userProfile.userTrainings}" var="userTraining" varStatus="status">
                             <tr>

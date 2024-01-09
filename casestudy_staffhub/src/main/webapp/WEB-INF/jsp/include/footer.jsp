@@ -8,9 +8,8 @@
         </div>
         <div class="row">
              <div class="col-12 text-center pt-3">
-                 <a href="https://www.facebook.com" class="fa fa-facebook px-2"></a>
-                 <a href="https://www.twitter.com" class="fa fa-twitter px-2"></a>
-                 <a href="https://www.linkedin.com" class="fa fa-linkedin px-2"></a>
+                 <a href="https://github.com/getuengda/StaffHub" class="fa fa-github px-2"></a>
+                 <a href="https://www.linkedin.com/in/getu-taddesse/" class="fa fa-linkedin px-2"></a>
               </div>
           </div>
     </div>

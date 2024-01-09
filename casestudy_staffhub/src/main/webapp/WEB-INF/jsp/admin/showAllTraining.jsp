@@ -19,7 +19,7 @@
                         <div class="container">
                               <div class="row justify-content-center">
                                     <div class="col-12">
-                                          <h3 class="text-center pb-3">We have the following ${trainingVar.size()} training area currently</h3>
+                                          <h3 class="text-center pb-3">Currently we have the following ${trainingVar.size()} trainings</h3>
                             <div class="row">
                                 <c:forEach items="${trainingVar}" var="training">
                                     <div class="col-sm-4">
@@ -29,7 +29,7 @@
                                             <h5 class="card-title"><strong>Training Name</strong>: ${training.trainingName}</h5>
                                             <p class="card-text"><strong>Description</strong>: ${training.description}</p>
                                             <p class="card-text"><strong>Prerequisite</strong>: ${training.prerequisite}</p>
-                                            <a href="${training.trainingDetail}" class="btn btn-primary">Go somewhere</a>
+                                            <a href="${training.trainingDetail}" class="btn btn-primary">Show more</a>
                                         </div>
                                         <div class="card-footer">
                                             <small class="text-muted">ID: ${training.id}</small>
