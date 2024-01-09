@@ -28,4 +28,7 @@ public interface UserDAO extends JpaRepository<User, Long> {
 
     @Query("SELECT count(u) FROM User u WHERE u.email = :email")
     Integer countByEmail(@Param("email") String email);
+
+    @Query("SELECT u FROM User u WHERE u.department.id = :departmentId ORDER BY u.department.id")
+    public List<User> sortByDepartment(Integer departmentId);
 }

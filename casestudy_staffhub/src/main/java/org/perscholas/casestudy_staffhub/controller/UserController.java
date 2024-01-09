@@ -383,15 +383,23 @@ public class UserController {
     }
 
     @GetMapping("/staff/showAll")
-    public ModelAndView showAllStaff() {
+    public ModelAndView showAllStaff(@RequestParam(required = false) Integer departmentId) {
         ModelAndView response = new ModelAndView("staff/showAll");
-        log.debug("In the user showAllStaff controller method firstName");
+        log.debug("In the user showAllStaff or Sort By Department controller method firstName");
 
-        // Fetch all staff
-        List<User> users = userService.getAllUsers();
+        List<User> users;
 
-        // Add staffs to the model
+        List<Department> departments = departmentService.getAllDepartments();
+
+        if(departmentId != null){
+            users = userDao.sortByDepartment(departmentId);
+        } else {
+            users = userService.getAllUsers();
+        }
+
+        // Add users and departments to the model
         response.addObject("userVar", users);
+        response.addObject("departmentVar", departments);
 
         for(User user : users){
             log.debug("user: id= " + user.getId() + "first name = " + user.getFirstName());
