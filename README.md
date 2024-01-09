@@ -6,7 +6,7 @@ A Personal Website for Managing Staff, Training and Departments. This website wa
 
 ## Screenshots
 
-![alt text]([image.jpg](https://github.com/getuengda/StaffHub/blob/main/AllTrainings2.png)
+![alt text](image.jpg)
 
 ## Tech Stack
 
