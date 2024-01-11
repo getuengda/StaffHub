@@ -706,17 +706,23 @@ public class AdminSystemController {
         ModelAndView response = new ModelAndView("admin/createTraining");
         log.info("In create training with no args");
 
+        // Fetch all trainings
+        List<Training> trainings = trainingService.getAllTrainings();
+
+        // Add trainings to the model
+        response.addObject("trainings", trainings);
+
         return response;
     }
 
-    @PostMapping("/admin/createTrainingSubmit")
+    @GetMapping("/admin/createTrainingSubmit")
     public ModelAndView createTrainingSubmit(@Valid @ModelAttribute TrainingFormBean form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            log.info("########## In create training submit");
+            log.info("########## In admin create training submit");
             ModelAndView response = new ModelAndView("admin/createTraining");
 
-            for (ObjectError error : bindingResult.getAllErrors()) {
-                log.info("error: " + error.getDefaultMessage());
+            for(ObjectError error : bindingResult.getAllErrors()){
+                log.info("error: " + error.getArguments());
             }
             response.addObject("form", form);
             response.addObject("errors", bindingResult);

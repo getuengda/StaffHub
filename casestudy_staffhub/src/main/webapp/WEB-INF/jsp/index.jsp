@@ -6,7 +6,7 @@
        <div class="row">
            <div class="col-12 text-center">
 
-               <form id="searchForm" action="">
+               <form id="searchForm" href="/" action="">
 
                    <div class="row justify-content-center mt-5">
                          <section id="searchFormSection">

@@ -49,8 +49,8 @@
                     <input type="text" class="form-control" id="departmentDetail" name="departmentDetail" value="${form.departmentDetail}">
                 </div>
 
-            <button type="submit" class="mb-5 btn btn-primary">Submit</button>
-            <button type="button" style="margin-left: 42rem" class="mb-5 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
+            <button type="submit" class="btn btn-primary mb-3 ml-4">Submit</button>
+            <button type="button" style="margin-left: 38rem" class="mb-3 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
         </form>
     </div>
 

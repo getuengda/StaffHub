@@ -16,6 +16,7 @@ public class DepartmentFormBean {
     @Length(max= 45, message = "Department Name must be less than 200 characters.")
     private String departmentName;
 
+    @NotEmpty(message="Department prerequisite is required.")
     private String description;
 
     private String imageUrl;

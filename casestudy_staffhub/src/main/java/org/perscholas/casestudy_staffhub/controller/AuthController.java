@@ -63,6 +63,19 @@ public class AuthController {
     @GetMapping("/auth/registerSubmit")
     public ModelAndView registerSubmit(@Valid RegisterUserFormBean form, BindingResult bindingResult, HttpSession session) {
 
+        if(bindingResult.hasErrors()){
+            log.info("########## In register user submit");
+            ModelAndView response = new ModelAndView("auth/register");
+
+            for(ObjectError error : bindingResult.getAllErrors()){
+                log.info("error: " + error.getArguments());
+            }
+            response.addObject("form", form);
+            response.addObject("errors", bindingResult);
+
+            return response;
+        }
+
         if (!form.getPassword().equals(form.getConfirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "error.password.match");
             ModelAndView response = new ModelAndView("auth/register");

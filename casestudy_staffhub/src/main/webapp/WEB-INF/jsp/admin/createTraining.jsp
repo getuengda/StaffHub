@@ -14,7 +14,7 @@
 
 <div class="d-flex justify-content-center align-items-center">
 
-        <form method="post" action="/admin/createTrainingSubmit" style="width: 50%;">
+        <form method="get" action="/admin/createTrainingSubmit" style="width: 50%;">
                             <c:if test="${not empty success}">
                                     <div class="row justify-content-center">
                                         <div class="col-6 text-center">
@@ -28,14 +28,14 @@
                <div class="mb-3 mt-5">
                        <label for="trainingName" class="form-label">Training Name</label>
                        <input type="text" class="form-control" id="trainingName" name="trainingName" value="${form.trainingName}">
-              </div>
-                   <c:if test="${errors.hasFieldErrors('trainingName')}">
-                      <div class="error" style="color:red">
-                          <c:forEach items="${errors.getFieldErrors('trainingName')}" var="error">
-                              ${error.defaultMessage}<br>
-                          </c:forEach>
-                      </div>
-                  </c:if>
+               </div>
+                <c:if test="${errors.hasFieldErrors('trainingName')}">
+                             <div class="error" style="color:red">
+                                 <c:forEach items="${errors.getFieldErrors('trainingName')}" var="error">
+                                     ${error.defaultMessage}<br>
+                                 </c:forEach>
+                             </div>
+                 </c:if>
               <div class="mb-3">
                   <label for="yourTextarea" class="form-label">Date Posted</label>
                   <input type="Date" class="form-control" id="datePosted" name="datePosted" value="${form.datePosted}">
@@ -62,6 +62,13 @@
                     <label for="prerequisite" class="form-label">Prerequisite</label>
                     <textarea class="form-control" id="prerequisite" name="prerequisite" value="${form.prerequisite}" rows="2" cols="50"></textarea>
                 </div>
+                    <c:if test="${errors.hasFieldErrors('prerequisite')}">
+                         <div class="error" style="color:red">
+                             <c:forEach items="${errors.getFieldErrors('prerequisite')}" var="error">
+                                 ${error.defaultMessage}<br>
+                             </c:forEach>
+                         </div>
+                    </c:if>
                 <div class="mb-3">
                     <label for="trainingDetail" class="form-label">Training Detail</label>
                      <input type="text" class="form-control" id="trainingDetail" name="trainingDetail" value="${form.trainingDetail}">
@@ -71,8 +78,8 @@
                      <input type="text" class="form-control" id="imageUrl" name="imageUrl" value="${form.imageUrl}">
                  </div>
 
-            <button type="submit" class="btn btn-primary mb-3 ml-4">Submit</button>
-            <button type="button" style="margin-left: 85rem" class="mb-5 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
+             <button type="submit" class="btn btn-primary mb-3 ml-4">Submit</button>
+             <button type="button" style="margin-left: 74rem" class="mb-3 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
         </form>
     </div>
 
