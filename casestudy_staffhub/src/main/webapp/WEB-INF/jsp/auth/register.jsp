@@ -131,6 +131,7 @@
 
 
                     <button type="submit" class="btn btn-primary mt-3 mb-3 ml-4 col-3">Submit</button>
+                    <button type="button" style="margin-left: 18rem" class="btn btn-primary mt-3 mb-3 col-3" onclick="window.location.href='/';">Cancel</button>
                 </form>
             </div>
         </div>

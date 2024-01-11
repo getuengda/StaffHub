@@ -112,18 +112,17 @@
                       <label for="address" class="form-label">Address</label>
                      <input type="text" class="form-control" id="address" name="address" value="${form.address}">
                   </div>
-
+                    <c:if test="${errors.hasFieldErrors('address')}">
+                              <div class="error" style="color:red">
+                                  <c:forEach items="${errors.getFieldErrors('address')}" var="error">
+                                      ${error.defaultMessage}<br>
+                                  </c:forEach>
+                              </div>
+                   </c:if>
                   <div class="mb-3 col-12">
                      <label for="imageUrl" class="form-label">Image URL</label>
                      <input type="text" class="form-control" id="imageUrl" name="imageUrl" value="${form.imageUrl}">
                  </div>
-                 <c:if test="${errors.hasFieldErrors('imageUrl')}">
-                           <div class="error" style="color:red">
-                               <c:forEach items="${errors.getFieldErrors('imageUrl')}" var="error">
-                                   ${error.defaultMessage}<br>
-                               </c:forEach>
-                           </div>
-                </c:if>
                 <button type="submit" class="btn btn-primary mb-3 ml-4">Submit</button>
                 <button type="button" style="margin-left: 85rem" class="mb-5 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
             </form>

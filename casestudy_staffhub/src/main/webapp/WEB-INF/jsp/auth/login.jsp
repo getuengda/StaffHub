@@ -38,6 +38,7 @@
                     </div>
 
                     <button type="submit" class="col-3 btn btn-primary mt-4 ml-4">Submit</button>
+                    <button type="button" style="margin-left: 14rem" class="mt-4 btn btn-primary" onclick="window.location.href='/';">Cancel</button>
                     <div class="mt-4 ml-4"><p>Forget your <span style="color: darkcyan">Username</span> or <span style="color: darkcyan">Password?</span></p></div>
                 </form>
 

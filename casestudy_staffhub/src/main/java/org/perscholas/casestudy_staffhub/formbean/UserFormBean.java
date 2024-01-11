@@ -32,7 +32,7 @@ public class UserFormBean {
     @Pattern(regexp = "^[a-zA-Z]{1,30}$")
     private String firstName;
 
-    @NotEmpty(message="First Name is required.")
+    @NotEmpty(message="Last Name is required.")
     @Length(max= 45, message = "Last Name must be less than 45 characters.")
     private String lastName;
 
@@ -46,11 +46,14 @@ public class UserFormBean {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
+    @NotEmpty(message="Job Title is required.")
     private String jobTitle;
 
     private String imageUrl;
 
+    @NotEmpty(message="Address is required.")
     private String address;
 
+    @NotEmpty(message="User Type is required.")
     private String userType;
 }
