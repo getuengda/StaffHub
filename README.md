@@ -5,17 +5,25 @@ A Personal Website for Managing Staff, Training and Departments. This website wa
 
 
 ## Screenshots
-![homePage](https://github.com/getuengda/StaffHub/assets/86804213/7a4c64ea-cb06-4f80-94f1-e4dbd72edea2)
 
+- Home Page 
+![Home_Page1](https://github.com/getuengda/StaffHub/assets/86804213/ee51083d-be97-4341-a3ba-14040720e497)
+
+- Admin Logged-in and accesses
 ![ShowAllUser](https://github.com/getuengda/StaffHub/assets/86804213/2fdcb0f0-84ca-4a4c-8e56-9a0d73e3d5f6)
 
-![ShowUserProfile](https://github.com/getuengda/StaffHub/assets/86804213/f881f949-e866-4fa0-a1e8-880934cdec39)
+- Accesses to addTraining
+![ShowProfile_addTraining](https://github.com/getuengda/StaffHub/assets/86804213/f46f9f68-8f2c-47f6-965f-b647e7e48d41)
 
+- Show All Trainings
 ![App Screenshot](https://github.com/getuengda/StaffHub/blob/main/AllTrainings2.png)
 
+- Show All Departments
 ![AllDepartments](https://github.com/getuengda/StaffHub/assets/86804213/10ebc1ef-5c4c-4501-8f69-d1f75d1fe8df)
 
 ## Tech Stack
+
+![TechnologyUsed](https://github.com/getuengda/StaffHub/assets/86804213/59a7f5f6-0c34-4173-924f-b2fcd4a31d6f)
 
 **Programming and Scripting Languages** 
 - Java
@@ -30,9 +38,11 @@ A Personal Website for Managing Staff, Training and Departments. This website wa
 
 
 ## Frameworks & Libraries
-
 - Spring Boot - Back-end
 - Bootstrap - Front-end & Back-end
+  
 ## Other Software Tools
-
 - MySQLWorkbench played a role where the back-end relied on this technology to store information.
+  
+## Acknowledgments
+- Imagine navigating a complex coding maze without a map or compass. That's what it would have been like without Pre Scholas powered by TEKSystem, and special thanks to my instructor Eric Heilig and my PD coach Krista. Their expert guidance and unwavering support charted the course for this project, leading me to the finish line.
